@@ -1,0 +1,172 @@
+=====================================================
+class A
+{
+int x;
+	//without virtual function
+};
+class B
+{
+int x;
+	//with virtual function
+};
+int main()
+{
+	A a;
+	B b;
+	cout<<"size of object a is "<<sizeof(a);
+	cout<<"size of object a is "<<sizeof(b);
+}
+class B contains a virtual function whereas class A doesnot contain any virtual function. If the size of the objects of both the classes A and B is compared, then size of object b is 8bytes more than the size of object a.The reason is, for every class which contains at least one virtual function, the compiler implicitly adds a virtual pointer.
+
+
+=======================================================================================
+If a class contains a virtual function then the compiler itself does two things.
+
+1)If an object of that class is created then a virtual pointer (VPTR) is inserted as a data member of the class to point to the VTABLE of that class. For each new object created, a new virtual pointer is inserted as a data member of that class.
+2)Irrespective of whether the object is created or not, the class contains as a member a static array of function pointers called VTABLE. Cells of this table store the address of each virtual function contained in that class.
+
+Virtual Functions in C++
+
+The most common use of runtime binding  is with base class pointers or references calling derived class functions. This is called runtime polymorphism and is implemented in C++ using virtual functions.
+A virtual function is a member function that is declared within a base class with the virtual keyword and is re-defined (Overridden) by a derived class. When a class contains a virtual function, it can be overridden in its derived class and tells the compiler to perform dynamic linkage (or late binding) on the function. Now, the virtual functions are implemented in C++ by using vTable and vPtr.
+
+What is VTable ?
+==>VTable is a class specific. It is a static member of the class since all the objects of a class refer to the same virtual table. It contains the addresses of the respective virtual functions of that class. VTable  is a constant array of function pointers which contains pointers to all virtual functions of the class. All the object of a class refer to its own virtual table.
+==>If in the derived class,a function that is declared as virtual in the base class is not overridden, then the compiler uses the address of the base class version in the derived class virtual table.
+
+
+What is Vptr (Virtual Pointer)?
+
+==>Every object of a polymorphic class has a hidden pointer called virtual pointer(vptr). it is a pointer to VTable and is automatically initialized to the starting address of the VTable in the constructor.
+==>The virtual pointer or _vptr is a hidden pointer that is added by the compiler as a member of the class to point to the VTable of that class. Every object of a class containing virtual functions, a vptr is added to point to the vTable of that class. It’s important to note that vptr is created only if a class has or inherits a virtual function.
+==>The setting up of the VTable for each polymorphic class, initializing the Vptr and inserting the codefor the function call happens automatically, the programmer doesnot have to worry about it.
+
+consider Employee and Salesperson are polymorphic class.
+
+==>when a class containing a virtual function is created or a class is derived from a class that contains virtual functions,compiler creates a unique VTable for that class.In VTable ,the compiler stores the addresses of all virtual functions.Each object contains vptr that points to VTable of that class.
+==>The compiler places Vptr as a data member in the class created per object.Vptr is initialized to the starting address of the appropriate VTable.when salesperson object is created,it contains VPtr as one ofits data members which points to the appropriate VTable.
+
+int main()
+{
+Employee * ptr;
+ptr=new Salesperson();
+ptr->display();
+}
+
+The compiler picks up the Vptr of the object pointed by ptr.Thus instead of calling Employee::display() the compiler generates the code that says the function at Vptr should be called.The fectching of Vptr and the determination of the actual function address occur at runtime,thus late binding is achieved.
+
+
+1)A class contains atleast one virtual function,that class is calles as polymorphic class
+2)compiler implicitely add a virtual pointer for every polymorphic class i.e vptr
+3)vptr is created per object
+4)vtable is called as static array of function pointer.
+5)vtable is created per class
+6)vtable will store the address of all the virtual functions
+7)vptr will point to the starting address of the table.
+
+===============================================================
+#include<iostream>
+using namespace std;
+int ustrlen(char*);
+int main() 
+{ 
+	char a[10];
+	cout<<"enter string\n";
+	cin>>a; //iet
+	int len=ustrlen(a);
+	cout<<"lenth of string is "<<len;
+}
+int ustrlen(char* p)
+{
+	int len=0;
+	while(*p!='\0')
+	{
+		len++;
+		p++;
+	}
+	return len;
+}
+==================================================================
+//ustrlen() ustrcpy() ustrcat() ustrrev()
+#include<iostream>
+using namespace std;
+void ustrcpy(char*,char*);
+int main() 
+{ 
+	char a[10],b[10];
+	cout<<"enter string\n";
+	cin>>a; //iet
+	ustrcpy(b,a);
+	cout<<"copied string is "<<b;
+}
+void ustrcpy(char* b1,char* a1)
+{
+	while(*a1 !='\0')
+	{
+		*b1=*a1;
+		b1++;
+		a1++;
+	}
+	*b1='\0';
+	
+}
+==============================================================================
+#include<iostream>
+using namespace std;
+void ustrcat(char*,char*);
+int main() 
+{ 
+	char a[10]="iet",b[10]="tech\0";
+	ustrcat(b,a);
+	cout<<"appended string is "<<b;
+}
+void ustrcat(char* b1,char* a1)
+{
+	while(*b1!='\0')
+	b1++;
+	while(*a1!='\0')
+	{
+		*b1=*a1;
+		a1++;
+		b1++;
+	}
+	*b1='\0';
+}
+
+========================================================
+//ustrlen() ustrcpy() ustrcat() ustrrev()
+#include<iostream>
+using namespace std;
+#include<string.h>
+int main() 
+{ 
+	char a[10]="iet";
+	char b[10];
+	int j=0;
+	int x=strlen(a)-1;//x=2
+	while(x>=0)
+	{
+		b[j]=a[x];
+		x--;
+		j++;	
+	}
+	b[j]='\0';
+	cout<<"reversed string is "<<b;
+	
+}
+=======================================================
+#include<iostream>
+using namespace std;
+#include<string.h>
+int main() 
+{
+	char choice; 
+	do
+	{
+		cout<<"hi\n";
+		cout<<"whether u want to continue or not[y/n]\n";
+		cin>>choice;
+		
+	}while(choice =='Y'|| choice == 'y');
+	
+}

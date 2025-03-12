@@ -1,0 +1,499 @@
+What is an application?
+==>An application, also referred to as an application program or application software, is a computer software package that performs a specific function directly for an end user.
+==> Microsoft Word and Excel, as well as popular web browsers like Firefox and Google Chrome, are examples of application software. 
+
+Types of Application:
+1)Desktop application: ex notepad,vs code,antivirus
+==>we need to install them in our system
+
+2)Web application:insta,facebook,gmail
+==>we dont need to install this application. 
+
+3)mobile application: for each web application ,we are having mobile versions also.
+========================================================================
+How web application works?
+==>if u are developing any application,we need to write certain amount of code and that code will be executed on some certain m/c.
+==>for developing desktop application,we need to write certain amount of code and that code will be executed on our local m/c.
+==>for developing web application,we need to write certain amount of code and that code will be executed on some m/c.
+
+==>suppose,we have written a web app code and that app will run only on our local m/c.
+but we need to create web app that can be used by multiple client, for that we have to deploy web application on server.
+=========================================================================================================
+server:server is a m/c that provides a service to the client according to the requirement given by client.
+
+=========================================================================================
+working of client and server architecture:
+==>server wont do anything of its own.for getting response ,we need to send request.
+client will send request to the server,server will contain all the things,that are required by the client.
+server accepts the request and process the request.and after processing the request,server will give a proper required response.
+==========================================================================================================
+How client and server works in web application:
+==>we have written code for WEB application, and the same code we have to deploy on server. and that code will be accessible by multiple user.
+==>multiple user accessed to ur web application by opening the browser,type url and in response you will be able to see entire web application.
+==>server is just a computer but with high processing capacity and high storage capacity.
+===================================================================================
+How each and every user  access to that web application:
+
+ip address: A unique address for a device that is connected over a network inorder to identify that device.
+if a server is also connected to a network then it will also have an ip address.
+
+ex: flipkart people has already hosted entire applicaion on the server. to access  that server(machine)we should have ip address.but it will be difficult for a normal person to remember each and every ip address.so instead of remembering ip address ,internet people came up with idea  i.e we should remember domain name like www.flipkart.com
+your browser is going to convert this domain name into ip address.
+==>ultimately request is going to ip address but to make user's life easy domainname or url is given.
+browser/device is client sending the request and server is processing the request and client will display the response send by the server like displaying webpage,video etc.
+
+role of client is display the data.
+role of server is process the data.
+================================================================
+Development of web application.
+
+==>inorder to develop any web application, we have to develop these 2 aspects.
+develop client as well as server.
+role of client is display the data.
+role of server is process the data.
+
+==>on client side,we need to work on data display,need to work on ui,what background,font on client side and on server side, we need to work on process the particular data. 
+
+ex:login page
+on browser/client -->login form ui(button)
+in login form we enter username and password and then we will hit login button.as soon as we click on login button ,request will send to server and server will do validations for the request data. and then server will respond.response can be success or unsuccess
+==>for this application development,what are the technologies we required:
+
+frontend:UI/client  of the application what can be visible(button,images,navigation bar,animations comes under UI of the webapplication).(we have to work on look and feel)
+frontend will be display by browser.
+
+backend:storage of data.
+if we are accessing youtube, all the data for the videos,data for the comments have been stored at the backend .data storage takes place at server side.
+server will handle 2 things
+1st data storage+ 2nd data processing
+
+frontend will only display the data.
+============================
+web application Frontend development stack:
+
+For creation of any UI ,we need to create layout/raw structure which will decide which html elements to be placed at which placed. 
+HTML==>it is used to create a layout of web page in which we will decide which html elements to be placed at which placed.html is only used to display the data/content. we cannt write any logic using html hence it is not programming language.
+html is only used to create layout of our web application.
+ex:displaying data like form display,button ,image,video,map  display can be done using HTML.
+========================================================================
+CSS:css will style our webpage i.e beautify webpage.
+==========================================================================
+JS is used for client side scripting.Scripting lang: js
+JS:client side scripting means if we want to write certain logics/operations  on the front end itself then js can be used.
+ex:if we want validations like username and password is required. so we need to write some code(if,else) on client side for validations ,this job will be done by js. request will be send by js ,and when server is ready to give response ,js will receive the response.
+dynamic work done on the frontend is handled by js.
+
+work done by js
+client side scripting,form validations, send a req,get res from server.
+================================================================================
+
+ =================================================================================
+
+==========================================================================
+=======================================================================================
+Some technical aspects about request and response.
+
+==>user is going to interact with the browser/device/client, client/browser will send request to the server.
+what are the requirements of sending a request to the server.
+Every request will contain 2 things:
+1)URL indicates on which server request has been sent. www.domain-name.com 
+www.makemytrip.com referred as base url if nothing is written after .com
+==>www.makemytrip.com/signup whatever is written after .com will be referred as sub url.
+signup is called as sub url
+==>Every application is having only 1 base url and with that base url ,we can create any number of sub url  and for each sub url we will get different response.
+
+2)Request method:indicates  for what purpose request has been sent. i.e fetching the data from the server or storing the data on the server, for delete the data on server,  for updating the data on the server.
+GET:if the request method is GET  that means a request has been sent to server for fetching data from the server.
+POST:client wants to store the data on a server.
+PUT:client wants to update the data
+DELETE:client want to delete the data
+
+Requirements for sending the response
+whenever server responds,then every response must have a status  with it. and response status will let the client know like what actually  happened on the server.
+status is consiting of 2 things status number and status message":
+1)status number integer:
+number starts with 200-299 : will represent success event may be deletion,insertion,updation succesful  200 mostly for success and message is OK
+400-499: error due to clients fault
+404: not found may be worng url,may be client has demanded wrong thing
+500-599==->error due to server's fault
+500-->internal server error
+2)message string:
+=======================================================================
+
+
+
+
+HTML(Hypertext markup language)
+
+
+markup lang:XML,HTML
+==>markup lang cannot be used for any operations(logic parts/calculations(addition,subtraction,comparison).
+==>For markup lang we will use only tags.
+There are 2 purpose of markup lang
+1)to represent/store the data . this purpose is fulfilled by XML
+==>for xml  only custom tags are there.
+
+
+//We want to represent some students data
+<students> //each student tag will represent 1 student
+	<student>
+			<id>101</id>
+			<name>rahul</name>
+	<student>
+
+</students>
+
+==>we can create our own custom tags based on our requirement.
+==>these tags will only going to represent the data.they are not going to display data anymore.
+
+
+2)display the data on web page. this purpose is fulfilled by HTML
+<tag-name>    ==>tag
+</tag-name> ==>closing tag.
+In HTML all the tags are predefined.cannot defined our own tag.
+
+ 
+Two types of tags:
+1)container tags:those tags who have opening and closing tags.data will be there between the tag
+2)empty tags:those tags who have only opening tags.
+=========================================================================================
+
+
+
+
+
+==>extension : .html/.htm
+==>html is not case sensitive.
+==>html is error free lang
+ //it informs the browser that we are using latest version of 	HTML.so that browser can avail latest version of html to your webpage.
+<html> //represent it is html document
+	<head> // represent part above url where logo and title of application can be given
+			<title>my first page</title>
+	</head>
+	<body> // represent part below url where main content of the application is display
+		<p> HELLO </p>	
+	</body>
+ 
+</html>
+
+===============================================================================
+
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> HELLO </p>	
+		<p>This is 2nd line</p>
+	</body>
+
+</html>
+
+ques? where the 2nd paragraph will display? same line or next line
+==>next line
+every paragraph will start from new line
+===============================================================================
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> HELLO </p>	<p>This is 2nd line</p>
+	</body>
+
+</html>
+//newline 
+===========================================================
+	<!DOCTYPE html>
+	<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> HELLO </p>	
+		<p>This is 2nd line. <br>This is another line</p>
+	</body>
+
+</html>
+//it will break the line within the paragraph
+====================================================================================================================
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> HELLO </p>	
+		<p>This is 2nd line. <br>This is another line</p>
+<span>first span</span>
+<span>second span</span>
+	</body>
+
+</html>
+//multiple span tag will always start from same line 
+
+==============================================================================
+&nbsp means non breaking space
+1 nbsp symbol means 1 space
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> HELLO </p>	
+		<p>This is 2nd line. <br>This is another line</p>
+	<p>hello &nbsp;&nbsp;world</p>
+	<pre>
+	hello 			world,
+	this is dummy pre tag
+					2nd line in pre tag
+	</pre>
+	</body>
+
+</html>
+
+//content will display in same manner only with the <pre>
+==================================================================
+//by default every element is alligned to the left.
+but we can customised allignment, we can apply customised allignment to every tag. for customization we have properties given to every tag technically called as attributes.
+//every tag in html is having few properties to customize them,technically properties are being referred as attributes.
+
+<p align="right">hello world</p>
+//align=left(by default),right,center,justify
+//starting of paragraph is allign but ending is not allign(uniform),if we want to allign the ending use align as justify
+
+=======================================================================
+Heading tags
+h1
+h6
+=====================================================
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+		<p> (a+b)<sup>2</sup> </p>	
+		<p>H<sub>2</sub>O</p>
+	</body>
+
+</html>
+==============================================================
+how to display links?
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+<a href="https://www.google.com">Visit Google</a>
+	</body>
+
+</html>
+
+//in between tags,we need to mention the text. what text u want to show on link .
+as soon the user clicks on link, then on which url it need to redirect ,we need to mention using hyper refererence i.e href
+===============================================================
+
+
+ex 2:login.html
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>login page page</title>
+	</head>
+	<body> 
+<h1>welcome to login page</h1>
+	</body>
+	
+</html>
+
+//now i want to give link to this login.html
+
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+	<a href="https://www.google.com">Visit Google</a>
+	<a href="login.html"> visit login page</a>  // search in same file . in href we need to mention path of html file
+</body>
+</html>
+//mention path of html file if  html file is in some folder
+<a href="pages/login.html">
+
+==========================================================================================
+===re========================================================================================
+===========================================================
+display image
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+	
+<img src="first.jpg">
+    </body>
+</html>
+
+// dimension of orignal image will display
+
+==============================================================
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+	
+<img src="first.jpg" width="500" height="500">
+    </body>
+</html>
+
+=====================================================================================
+<img src=images/out.png"> // if image is inside the sub folder
+=================================================================================================================
+==>list is sequence of items that we want to display.
+2 types of list
+
+1)ordered list: for each item label will be in a sequence of number/alphabet/roman
+2)unordered list:for each item, label will be a symbol
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+<ol>
+<li>mumbai</li>
+<li>nagpur</li>
+
+
+
+</ol>
+</body>
+</html>
+
+===============================================================================================
+//by default the type is 1
+<ol type="a">
+<ol type="1">
+<ol type="A">
+<ol type="i">
+<ol type="I">
+========================================================================================
+nested order list
+<ol type="A">
+<li>maharashtra</li>
+<ol type="a">
+	<li>mumbai</li>
+	<li>pune</li>
+</ol>
+<li>UP</li>
+<ol type="a">
+	<li>kanpur </li>
+	<li>lucknow</li>
+</ol>
+
+</ol>
+=========================================================
+<ol type="a" start="3"> // start means from which position u need to start the sequence. dont write value
+<ol start="3"> // by default type is number
+========================================================================================================
+by default in ol we have disc
+<ul>
+	<li>mumbai</li>
+	<li>pune</li>
+</ul>
+
+<ul type="circle|square">
+==============================================
+tables==>rows and col
+1 create a box ==>use <table>
+2)create a row in that box use <tr>
+3)start create col in that row use <td>
+
+//id name marks
+1       a 		45
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+<table>
+<tr>
+<td>id</td>
+<td>name</td>
+<td>marks</td>
+</tr>
+<tr>
+<td>1</td>
+<td>bahubali</td>
+<td>66</td>
+</tr>
+
+
+	</body>
+</html>
+//by default borders of the table is set to 0
+=======================================================
+<table border="1"> //it will assign a border width of 1 px to each and every cell
+==========================================================================================================
+<table border="1" cellspacing="10" cellpadding="10">
+
+cellspacing means space between 2 cells ,can be increased or decreased ,by default value is 1
+cellpadding means gap inside of the cell.
+
+============================================================================================================
+<thead></thead> //it is always recommended to place heading row in thead
+<tbody>/it is always recommended to place row data in tbody
+==>semantic tag.gives meaning to the content.
+this tag is not for output,its use for development purpose
+provides easyness and readability maintainess of the code
+if we want perform some specific type then we can apply either with thead or tbody
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+<table>
+<thead>
+<tr>
+<td>id</td>
+<td>name</td>
+<td>marks</td>
+</tr>
+
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>bahubali</td>
+<td>66</td>
+</tr>
+
+</tbody>
+
+
+	</body>
+</html>
+
+======================================================================================================
+<!DOCTYPE html><html>
+	<head>
+			<title>my first page</title>
+	</head>
+	<body> 
+<video controls width="400" height="700">
+<source src="my_video.mp4">
+</video>
+	</body>
+</html>
+
+======================================================
+<source> represent path of video file
+<video > using this tag we are not able to display controls for this video
+<video controls> display controls,play,fullscreen,volume,dowmload
+
+
+====================================================================

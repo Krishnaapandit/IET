@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <img id="bulbImage" src="bulb off.jpg" alt="Bulb Off"width=200px><br>
+    <input type="button" value="on" id="btn1" onclick="togglebulb('on')">
+    <input type="button" value="off" id="btn2" onclick="togglebulb('off')">
+    
+    <script>
+        function togglebulb(state){
+            if (state == 'on'){
+                document.getElementById('bulbImage').src = 'light on.png';
+            }
+            else{
+                document.getElementById('bulbImage').src = 'bulb off.jpg';
+            }
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+    <body>
+        <div align="center">
+            <h1>Hello</h1>
+            <h1 id="idh1">Bye bye</h1>
+            <input type="radio" id="c1" name="color"><label>red</label>&nbsp;&nbsp;
+            <input type="radio" id="c2" name="color"><label>Yellow</label>&nbsp;&nbsp;
+            <input type="radio" id="c3" name="color"><label>blue</label>
+        </div>
+       <script>
+        h1=document.querySelector("h1");
+        const c1=document.getElementById("c1");
+        c1.onchange=function(){
+            h1.style.color="red";}
+            document.querySelector("#c2").onchange=function(){
+                h1.style.color="green";
+            }
+            document.querySelector("#c3").onchange=function(){
+                h1.style.color="blue";
+            }
+        
+       </script>
+    </body>
+</html>

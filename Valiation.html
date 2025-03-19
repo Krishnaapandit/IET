@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            .error-text{
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <form action ="https://www.github.com" onsubmit="return validate()">
+        <input type="text" placeholder="enter name" id="name" onkeyup="validateName()"><br>
+        <span id="error" class="error-text"></span><br><br>
+        <input type="password" placeholder="enter password" id="pass"onkeyup="validatePassword()"><br>
+        <span id="error1" class="error-text"></span><br><br>
+        <input type="submit" value="Login">
+    </form>
+    <script>
+        function validate(){
+            var flag=true;
+            const name =document.getElementById("name").value;
+            if(name.length==0){
+                document.getElementById("error").innerHTML="Name is required";
+                flag=false;
+            }
+            const pass =document.getElementById("pass").value;
+            if(pass.length==0){
+                document.getElementById("error1").innerHTML="Password is required";
+                flag=false;
+            }
+            return flag;
+            }
+          
+            function validateName()
+      {
+        const name= document.getElementById("name").value;
+            if(name.length == 0)
+                    document.getElementById("error").innerHTML="name is required";
+            else
+                document.getElementById("error").innerHTML="";
+            }
+
+            function validatePassword(){
+                const pass= document.getElementById("pass").value;
+            if(pass.length == 0)
+                    document.getElementById("error1").innerHTML="Password is required";
+            else
+                document.getElementById("error1").innerHTML="";
+
+            }
+            
+      
+    </script>
+    </body>
+</html>

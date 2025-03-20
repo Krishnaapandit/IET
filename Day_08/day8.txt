@@ -1,0 +1,698 @@
+For in loop
+ 
+for(temp in array)//fetching index by index
+{
+}
+//we can use array within for in loop
+//for in loop supports to manipulate the array
+//it is index based
+
+for of loop
+ 
+for(temp of array)//fetching element by element
+{
+}
+//we cant use array within for of loop
+//for of loop doesnot supports to manipulate the array
+//it is not  index based
+
+
+<!-- example on js arrays -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<title>Arrays</title>
+  </head>
+  <body>  
+	<h3>demo on for in loop (js6)</h3>	
+	<script>
+	  const a = [10,20,30];
+	  
+	  for(let i  in  a)
+	  {
+	    document.write(` ${i} &nbsp; ${a[i]}<br>`);
+		a[i]=a[i]+2 ;
+    document.write(a[i]);		
+	  }	 
+	</script>	 
+	<h3>demo on for of loop (js6)</h3>	
+	<script>
+	  const colors=['red','cyan','black','blue'];
+		
+	  for(let c  of  colors)
+	    document.write(`${c}<br>`);
+	
+	 
+
+let str="mangos";
+	  document.write(`${str[0]}<br>`);
+	  
+	  for(let c of str)
+	    document.write(`${c},`);	
+      for(let i in str)
+	    document.write(`${i},${str[i]}`);		
+	</script>
+  </body>
+</html>
+===================================================
+
+The following example uses an arrow function as an argument of the map() method that transforms an array of strings into an array of the string’s lengths.
+
+<!-- example on js arrays -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<title>Arrays</title>
+  </head>
+  <body>  
+	<h3>demo on for in loop (js6)</h3>	
+	<script>
+let names = ['Apple', 'Orange', 'Mango', 'Banana'];
+let lengths = names.map((name) =>
+{
+  return name.length;
+});
+console.log(lengths);
+ 
+	</script>
+  </body>
+</html>
+=======================================================
+<html>
+<body>
+	<h3>demo on internal links</h3>
+	
+	<a href="#tata">Tata Motors</a> &nbsp; 
+	<a href="#hyundai">Hyundai Motors</a>
+	<br>
+	<br>
+	<h2 id="tata"><u>Tata Motors</u></h2>
+	<p>
+	Tata Motors Limited is an Indian multinational automotive company, headquartered in Mumbai and part of the Tata Group. The company produces cars, trucks, vans, and busses.</p>
+		Tata Motors has auto manufacturing and vehicle plants in Jamshedpur, Pantnagar, Lucknow, Sanand, Dharwad, and Pune in India, as well as in Argentina, South Africa, the United Kingdom, and Thailand. It has research and development centers in Pune, Jamshedpur, Lucknow, Dharwad, India and South Korea, the United Kingdom, and Spain. Tata Motors is listed on the BSE (Bombay Stock Exchange), where it is a constituent of the BSE SENSEX index, the National Stock Exchange of India, and the New York Stock Exchange. The company is ranked 265th on the Fortune Global 500 list of the world's biggest corporations as of 2019.</p>
+    </p>
+	<br>
+	<h2 id="hyundai"><u>Hyundai Motor Company</u></h2>
+	<p>
+	The Hyundai Motor Company, often referred to as Hyundai Motors and commonly known as Hyundai, (Korean: ; Hanja: ; RR: Hyeondae, IPA: 'modernity') is a South Korean multinational automotive manufacturer headquartered in Seoul, South Korea, which was founded in 1967. Currently, the company owns 33.88 percent of Kia Corporation, and fully owns two marques including its luxury cars subsidiary, Genesis, and their electric vehicle brand Ioniq. The three brands altogether make up the Hyundai Motor Group.</p>
+	<p>Hyundai operates the world's largest integrated automobile manufacturing facility in Ulsan, South Korea which has an annual production capacity of 1.6 million units. The company employs approximately 75,000 people worldwide. Hyundai vehicles are sold in 193 countries through 5,000 dealerships and showrooms. As of 2022, Hyundai is the world's third-largest carmaker in terms of production, only falling behind Toyota and Volkswagen.</p>
+  </body>
+</html>
+================================================
+output tag
+
+> this tag used to print data/output value on webpage.HTML <output> tag is used to display the result of some calculation (performed by JavaScript).
+> it is paired & inline element.
+Syn  <output attributes> text </output>
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<input type="text" placeholder="enter 1st no" id="input1">
+<input type="text" placeholder="enter 2nd no" id="input2">
+<input type="button" value="add" onclick="summation()"><br>
+<output id="outputid"></output>
+<script>
+    function summation()
+    {
+            var a=document.getElementById("input1").value;
+            var b=document.getElementById("input2").value;
+            c= +a + +b;
+            outputid.value="result= "+c;
+    }
+</script>
+</body>
+</html>
+==================================
+marquee tag
+The <marquee> tag in HTML creates a scrolling text or image effect within a webpage. It allows content to move horizontally or vertically across the screen, providing a simple way to add dynamic movement to elements. its paired tag
+Syn:
+<marquee attributes>text|img| component </marquee>
+ attributes:
+	direction => down, up, left (default), right
+	
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div>
+        <marquee direction="up" >
+            <div style="background-color: green;">
+               HELLO STUDENTS
+            </div>
+        </marquee>
+    </div>
+</body>
+</html>
+
+
+
+
+=============================
+fieldset tag
+> this tag used for drawing a common border around elements/tags.
+> its paired tag and block level
+> we can draw any no of borders
+Syn:	<fieldset attributes>
+		<legend>text</legend>
+		Sub elements
+	</fieldtset>
+
+attributes:
+align : align of elements, it supports 3 alignments center, left, right
+	   left is default align
+border : style of line, thickness of line, color of line
+width  : width of box (size in % )
+
+
+legend tag
+>legend tag used for set title/heading for fieldset
+>legend is sub tag of fieldset tag
+>its paired tag
+Syn:<legend attributes>Heading</legend>
+
+attributes:
+align :align of elements, it supports 3 alignments center, left, right
+	  left is default align
+color :
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<style>
+		#id1{
+		   width:150px;
+		   height:150px;
+		   border-radius:5px;
+           border-color:blue;
+           margin:auto;
+		}
+        #id2{
+            text-align: center;
+            color:aqua;
+        }
+	</style>
+  </head>
+  <body>
+    <fieldset id="id1">
+      <legend id="id2">Colors</legend>
+	  <ul>
+		<li>Red</li>
+		<li>Yellow</li>
+		<li>Green</li>
+	  </ul>	
+	</fieldset>
+	<br> <br>
+	
+  
+  </body>
+</html>
+=========================================
+details and summary
+>details and summary tags are used to allow the user to expand/collapse some information, when the user clicks on the heading.
+>both are paired& block level
+> details tag is the main tag and summary is the sub tag of details tag.
+Syn:
+	<details>
+		<summary>Short info</summary>
+  Detailed Information
+</details>
+
+<!-- example details & summary  tags -->
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+	<details>
+	  <summary>Colors</summary>
+	  <ul>
+		<li>Red</li> <li>Yellow</li>  <li>White</li> <li>Black</li>
+	  </ul>
+	</details>
+	 
+  </body>
+</html>
+			 
+===========================================
+figure
+The <figure> element is used for indicating self-contained content. The tag can include images, diagrams, illustrations, code examples, etc.
+figcaption
+The <figcaption> element is used for adding signature or annotation to the <figure> tag.
+Syn:		<figure>
+Image
+<figcaption> caption/text </figcaption>
+</figure>
+
+<!-- example figure & figcaption  tag -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex36</title>
+	<link rel="icon" href="logo1.jpg">
+  </head>
+  <body>
+   <section >
+	<figure>
+	  <img src="baby.jpg" width="150" height="150">
+	  <figcaption>figure 1.1</figcaption>
+	</figure>
+	<figure>
+	  <img src="login.jpg" width="150" height="150">
+	  <figcaption>figure 1.2</figcaption>
+	</figure>  
+	
+   </section>
+  </body>  
+</html>
+=======================================
+iframe tag
+
+An HTML iframe is used to display a web page within a same web page.
+The HTML <iframe> tag specifies an inline frame.
+
+An inline frame is used to embed another document within the current HTML document.
+
+<!-- example iframe tag -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex34</title>
+	<link rel="icon" href="logo1.jpg">
+  </head>
+  <body>
+	<h2>demo on inline frame</h2>
+	
+
+<iframe width="783" height="440" src="https://www.youtube.com/embed/ge3_A2VvI1M" title="Virat Kohli 72*" ></iframe>
+
+
+
+  </body>
+</html>
+			 
+	 
+
+=====================================================
+
+CSS COLOR :
+background:linear-gradient(to right, #ff00ff,  #3300ff);  OR  
+background:linear-gradient(to right, #ff00ff 40%,  #3300ff 60%);	
+background:radial-gradient(yellow, black );
+
+
+The Hyundai Motor Company, often referred to as Hyundai Motors and commonly known as Hyundai, (Korean: ; Hanja: ; RR: Hyeondae, IPA: 'modernity') is a South Korean multinational automotive manufacturer headquartered in Seoul, South Korea, which was founded in 1967. Currently, the company owns 33.88 percent of Kia Corporation, and fully owns two marques including its luxury cars subsidiary, Genesis, and their electric vehicle brand Ioniq. The three brands altogether make up the Hyundai Motor Group.
+
+Hyundai operates the world's largest integrated automobile manufacturing facility in Ulsan, South Korea which has an annual production capacity of 1.6 million units. The company employs approximately 75,000 people worldwide. Hyundai vehicles are sold in 193 countries through 5,000 dealerships and showrooms. As of 2022, Hyundai is the world's third-largest carmaker in terms of production, only falling behind Toyota and Volkswagen.
+
+Hyundai operates the world's largest integrated automobile manufacturing facility in Ulsan, South Korea which has an annual production capacity of 1.6 million units. The company employs approximately 75,000 people worldwide. Hyundai vehicles are sold in 193 countries through 5,000 dealerships and showrooms. As of 2022, Hyundai is the world's third-largest carmaker in terms of production, only falling behind Toyota and Volkswagen.
+
+Hyundai operates the world's largest integrated automobile manufacturing facility in Ulsan, South Korea which has an annual production capacity of 1.6 million units. The company employs approximately 75,000 people worldwide. Hyundai vehicles are sold in 193 countries through 5,000 dealerships and showrooms. As of 2022, Hyundai is the world's third-largest carmaker in terms of production, only falling behind Toyota and Volkswagen.
+===========================================
+
+
+=========================================
+decimal, upper-alpha, lower-alpha, lower-roman, upper-roman, lower-greek, decimal-leading-zero, none, disk, circle, square, telugu, tamil, kannada, &#9966 .... -->
+
+<ul style="list-style-type:'&#8377;'">
+        <li>abc</li>
+        <li>xyz</li>
+
+    </ul>
+================================================
+CSS display Property:
+CSS display is the most important property of CSS which is used to control the layout of the element. It specifies how the element is displayed.
+
+1) CSS display inline
+The inline element takes the required width only. It doesn't force the line break so the flow of text doesn't break in inline example.
+
+2) CSS display inline-block
+
+The CSS display inline-block element is very similar to inline element but the difference is that you are able to set the width and height.
+
+3)CSS display block
+
+The CSS display block element takes as much as horizontal space as they can. Means the block element takes the full available width. They make a line break before and after them.
+
+4)CSS display none
+
+The "none" value totally removes the element from the page. It will not take any space.
+
+
+
+<!DOCTYPE html>  
+<html>  
+<head>  
+<style>  
+p {  
+    display: inline-block;  
+background-color: red;  
+height: 50px;
+width:50px; 
+}  
+</style>  
+</head>  
+<body>  
+<p>Hello Javatpoint.com</p>  
+<p>Java Tutorial.</p>  
+<p>SQL Tutorial.</p>  
+<p>HTML Tutorial.</p>  
+<p>CSS Tutorial.</p>  
+</body>  
+</html>   
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+  </head>
+  <body> 
+	<h3>demo on display</h3>
+	<div style="display:none;">
+	 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or at your option any later version.
+	</div>
+	
+	<!-- block ==> inline -->
+	<h2 style="background:red; display:inline;">Apple</h2>
+	<h3 style="background:blue; display:inline;">Mango</h2>	
+	<div style="background:green; display:inline;">Grape</div>
+	<br> <br>
+	<!-- inline ==> block -->
+	<span style="background:cyan; display:block;">Samsung</span>
+	<span style="background:pink;  display:block;">SOny</span>	
+	
+  <body>  
+</html>  		
+
+=====================================
+
+<!-- CSS Properties -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex54</title>
+	
+	<style>
+	  div{
+	    width:150px;
+		height:150px;
+		 	  }
+	</style>
+  </head>
+  <body> 
+  <!--
+	<h3>demo on margin & position</h3>	-->
+	<div style="background:red; margin-left:50px; margin-top:50px;"></div>
+	<div style="background:blue; margin-left:60px; margin-top:60px;"></div>	
+	<div style="background:green; margin-left:70px; margin-top:70px;"></div>	
+	 
+  <body>  
+</html>  		
+================================================
+<!-- CSS Properties -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex55</title>
+	<link rel="icon" href="logo1.jpg">
+	<style>
+	  div{
+	    width:400px;
+        height: 500px;
+		background:cyan;
+		position:absolute;
+		margin-left:500px;
+		margin-top:200px;
+	  }
+     input{
+        position:relative;
+     }
+	</style>
+  </head>
+  <body> 
+	<div>
+	 <input type="text" style="margin-left:50px;">
+	 <input type="password" style="margin-left:50px; ">
+	 <input type="date" style="margin-left:50px;">
+	</div>
+	 
+	<!-- margin:auto;
+		text-align:center;  -->
+  <body>  
+</html>  
+=================================
+ <body> 
+	<!-- box model -->
+	<div style="width:200px; height:100px; border:5px solid red; padding:10px 20px; margin:15px;">
+		Hello World
+	</div>
+ 
+  <body>  
+=======================================================
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Ex57</title>
+  <link rel="icon" href="logo.png">
+	<style>
+		*{
+			border:2px solid red;
+			color:blue;
+		}
+	</style>
+ </head>
+ <body> 
+	<h2>demo on universal selector</h2>
+	<h1>Apple</h1>
+	<div>Orange</div>
+	<p>Banana</p>
+	<span>Grape</span>
+	<ul>
+		<li>HTML</li>		<li>CSS</li>	<li>JavaScript</li>
+	</ul>
+ </body>
+</html>
+=============================
+child selector
+=> used to define/to apply same styles for child elements and grand child elements  so on..
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Ex62</title>
+  <link rel="icon" href="logo.png">
+	<style>
+		div  a{
+			color:red;
+			text-decoration:none;
+		}		
+		ul  li  a{
+			color:green;
+		} 	
+	</style>
+ </head>
+ <body> 
+	<h2>demo on  child selectors</h2>
+	<a href="ex1.html">goto ex1</a> <Br>
+	<a href="ex2.html">goto ex2</a> <br>
+	<div>
+		<a href="ex11.html">goto ex11</a> <br>
+		<a href="ex12.html">goto ex12</a> <br>
+		<p>
+			<a href="ex21.html">goto ex21</a> 
+		</p>
+	</div>
+
+	<ul>
+		<li>
+			<a href="https://www.google.com">google</a>
+		</li>
+		<li>
+			<a href="https://www.facebook.com">facebook</a>
+		</li>
+			<a href="https://www.youtube.com">youtube</a>
+	</ul>	 
+ </body>
+</html>
+======================================
+<!-- CSS Selectors
+direct child selector
+=> used to define/to apply same styles for child elements and grand child elements  so on..
+	Syn:	p-tag > c-tag {
+					prop:value;
+					.......
+				}
+				gp-tag > p-tag > c-tag {
+					prop:value;
+					.......
+				}
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Ex63</title>
+  <link rel="icon" href="logo.png">
+	<style>
+		div > a{
+			color:red;
+			text-decoration:none;
+		}		
+		ul > li > a{
+			color:green;
+		} 	
+	</style>
+ </head>
+ <body> 
+	<h2>demo on  direct child selectors</h2>
+	<a href="ex1.html">goto ex1</a> <Br>
+	<a href="ex2.html">goto ex2</a> <br>
+	<div>
+		<a href="ex11.html">goto ex11</a> <br>
+		<a href="ex12.html">goto ex12</a> <br>
+		<p>
+			<a href="ex21.html">goto ex21</a> 
+		</p>
+	</div>
+
+	<ul>
+		<li>
+			<a href="https://www.google.com">google</a>
+		</li>
+		<li>
+			<a href="https://www.facebook.com">facebook</a>
+		</li>
+			<a href="https://www.youtube.com">youtube</a>
+	</ul>	 
+ </body>
+</html>
+=========================
+<!-- example on CSS Selector -->   
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex64</title>
+	<style>
+	 
+	  [width="200"]{
+		border-radius:50%;
+	  }
+	  [type="text"]{
+		color:blue;
+	  }
+	  input[type="password"]{
+		color:green;
+	  }
+	</style>
+  </head>
+  <body>
+
+	
+	
+	<img src="baby.jpg" width="200">	
+	
+	<br>
+	<input type="text"> <br>
+	<input type="text"> <br>
+	<input type="password"> <br>	
+	<input type="date"> <br>	
+	
+  </body>
+</html>
+  
+
+====================================
+<!-- example on CSS Selector 
+	selector:pseudo-class{
+	   prop:val;
+	   ...
+	}
+-->   
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex66</title>
+	<style>
+	  a{
+	    color:white;
+		font-size:20px;
+		text-decoration:none;
+		display:inline-block;
+		width:120px;
+	  }
+	  a:hover{
+		color:yellow;
+		text-decoration:underline;		
+	  }
+	</style>
+  </head>
+  <body>
+	<h2>demo on pseudo classes</h2>
+	<div style="background:black; text-align:center;">
+	  <a href="https://www.google.com">Google</a>
+	  <a href="https://www.youtube.com">Youtube</a>
+	  <a href="https://www.facebook.com">Facebook</a>
+	</div>
+
+  </body>
+</html>
+====================================
+<!-- example on CSS Selector 
+	selector::pseudo-element{
+	   prop:val;
+	   ...
+	}
+-->   
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex67</title>
+	<style>
+	  p::first-letter{
+	    color:white;
+		background:black;
+		font-size:30px;
+	  }
+	  p::first-line{
+		color:blue;
+	  }
+	 
+	  ::placeholder{
+		color:pink;
+		text-align:center;
+	  }
+	  ::marker{
+		color:hotpink;
+	  }
+	  ol li, ul li{
+		color:teal;
+	  }
+	</style>
+  </head>
+  <body>
+	<h2>demo on pseudo elements</h2>
+	<p>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or at your option any later version.</p>
+	<p>
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+	<input type="text" placeholder="enter username"> <br>
+	<input type="password" placeholder="enter password">
+	
+	<ol>
+	  <li>Oracle</li> <li>MySQL</li>  <li>SQLServer</li>
+	  <li>MongoDB</li> <li>DB/2</li>
+	</ol>
+	<ul>
+	  <li>C</li> <li>CPP</li>  <li>Corejava</li>
+	  <li>C#.net</li> <li>Python</li>
+	</ul>	
+	
+	 
+  </body>
+</html>
+  
+==========================

@@ -1,0 +1,1725 @@
+ (AJAX)asynchronous javascript and xml
+
+==>In web application,data will be stored on server side permanently and we are accessing that data on client side. whenever client needs data,client send request to the server and server will send response to the client.This entire process is done on client side by ajax. 
+
+ ==>if we are having client/frontend application,now we want to get data from the server/submit data onto server,we have to write js code that will send request on server or take response from server,the same task done by ajax.
+==>ajax is something that is used to fetch data from server,by sending a request from the browser to it.the entire process will be asynchronous(non blocking),it will not block the other process in the browser.
+
+ex:
+<form action="" onsubmit="">
+when we click on login button,as action is blank,request will be send to same url.
+i.e whenever browser send a request  to the server, the browser  will  always reload the page.
+
+==>But in real time example,whenever we send request our page doesnot take reload.
+But while using fb-->like, dislike,searching name,browser will not reload again and again,it is possible by using AJAX
+
+==>amazon searchbar-==>while searching for any product in the searchbar, data will be stored in amazon server, based on the product search in search bar,amazon server will display all the productlist based on the keyword ,without reloading of the webpage.
+behind the scence request is going,response is coming from server without reloading the page.
+==>without reloading of the browser,if we want to fetch data from the server,in that case ajax is used.
+
+==>using AJax we can fetch data from a server(send a request on a  server) asynchronously without reloading the browser window.
+==>AJAX is async in nature,this means it will not block the other process to get response from a server.
+
+
+=========================================================================================================
+For sending request we shld have URL, request method
+==>we need to specify on which url,we need to send the request and what will be request method.
+
+steps to work with AJAX:
+//whatever the operations(on which url,we need to send the request,get the response,want to specify request method)we need to perform it will be through object of XMLHtppRequest class.
+1. create object of XMLHttpRequest class //Object creation on client side whenever client wants to send request
+const xhr=new XMLHtppRequest();
+
+2.open or initialize the request: mention the url and request method
+on which url we have to send request and what will be the request method for this we have to open or initialize the request:
+xhr.open(method,url);
+xhr.open("GET","https://jsonplaceholder.typicode.com/users");
+
+3.send the request
+xhr.send(); //send() is used to send request
+
+==>we are not having our own server that will send response with data.
+jsonplaceholder---->dummy server
+https://jsonplaceholder.typicode.com/users
+==>whenever we will send GET request on this url, we get  response  data of all users.data will be in array of json objects. 1 json object represent 1 user data.
+===================================================================================================
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+
+</head>
+<body>
+
+    <input type="button" value="fetch data" onclick="fetchdata()">
+    <script>
+        function fetchdata()
+        {
+            const xhr=new XMLHttpRequest();
+            xhr.open("GET","https://jsonplaceholder.typicode.com/users");
+            xhr.send();
+        
+            } 
+    </script>
+</body>
+</html>
+
+========================================================================
+==>as soon we click on button ,request is sent from browser to  /user url, still page doesnot take reload.
+after processing the request,response is send by server to browser.response is ready with the browser which has been sent by the server.But  we havent process any response.
+==>status 200 means server has responded with data.
+==>Now we have to process the data
+======================================================================
+4. Get the response:
+we want to know the current state of the request(what is currently happening with the request i.e if request is accepted or not,if server has started processing or not,if server has responded or not,if response is ready on client or not)
+for this,browser maintain a property for xhr object i.e readystate.
+==>we can get the state of the request using readyState property.
+==>readystate is an integer value ranging from 0 to 4. readystated updated by browser internally
+0 : request object has been created but not yet initialized,not yet opened
+1: request has been initailized,open() has been called
+2:request has been sent
+3:request has been accepted by the server and it has started processing it
+4:response is ready
+==>readystate will change its value based on the current state of request object
+
+faq: on which ready state value,we have to process the response to display?
+==>4
+
+when browser updates readystate,browser will fire an event onreadystatechange event will be triggered
+
+faq: How to read response data
+==>by using responseText property
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+
+</head>
+<body>
+
+    <input type="button" value="fetch data" onclick="fetchdata()">
+    <script>
+        function fetchdata()
+        {
+            const xhr=new XMLHttpRequest();
+            xhr.open("GET","https://jsonplaceholder.typicode.com/users");
+            xhr.send();
+        
+           xhr.onreadystatechange=() => (when readystate changes,event occurs,this function will be executed
+            {
+                console.log("state changed",xhr.readyState);
+                if(xhr.readyState==4 && xhr.status==200) // 	{
+               console.log(xhr.responseText);//response will be display on console.get javascipt object in text format
+	//data is der in array but it is in string format .response is array of json object but our browser is considering as string. we have to extract json object outside the string.
+                const data=JSON.parse(xhr.responseText);// 
+                console.log(data);//data will be considered as an array of json object
+                }
+            }
+        }
+
+</script>
+</body>
+</html>
+
+=======================================================================================
+person = {name:"John", age:31, city:"New York"};//javascript notation json object
+console.log(person); 
+console.log(JSON.stringify(person));//javascript notation json object converted into string based json object
+person1= '{"name":"John", "age":31, "city":"New York"}'; 
+console.log(JSON.parse(person1));////string based json object converted into javascript notation json object.
+======================================
+<!DOCTYPE html>
+<html>
+<head>
+    <body>
+        <h1>welcome to file2</h1>
+    </body>
+    <script>
+
+person = {name:"John", age:31, city:"New York"};
+const string=JSON.stringify(person);
+console.log(string);
+const jsjsonobj=JSON.parse(string);
+console.log(jsjsonobj);
+
+    </script>
+</head>
+</html>
+
+
+=============================================================
+WE SHOULD DISPLAY DATA ON WEBPAGE.HOW TO DISPLAY DATA ON WEBPAGE?
+
+//data for a single user  will be assign in a paragraph.
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+p{
+
+    background-color: aqua;
+}
+
+</style>
+
+
+</head>
+<body>
+<div id="container">
+
+
+</div>
+
+    <input type="button" value="fetch data" onclick="fetchdata()">
+
+    <script>
+        function fetchdata()
+        {
+            const xhr=new XMLHttpRequest();
+            xhr.open("GET","https://jsonplaceholder.typicode.com/users");
+
+            xhr.send();
+            xhr.onreadystatechange=() =>{
+    
+                if(xhr.readyState==4 && xhr.status==200){
+                     const data=JSON.parse(xhr.responseText);
+                console.log(data);
+                const container1=document .getElementById("container");
+                for(i=0;i<data.length;i++){
+                    const para=document.createElement("p");
+                    para.innerHTML=data[i].id + "  "+ data[i].name
+                    container.appendChild(para);//data will be appended as a child in the container
+                }
+                }
+            }
+
+        }
+
+
+
+    </script>
+
+
+
+</body>
+</html>
+
+=================================
+
+
+
+program 3
+==>create dynamic table and populate data on table whenever user hits on button
+<thead> contains hardcode 
+<tbody>contains dynamic data
+create table row and for each row create column
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+
+</head>
+<body>
+<input type="button" value="fetch data" onclick="fetchData()">
+<table border="1" cellpadding="5" cellspacing="1">
+<thead>
+<tr>
+    <th>id</th>
+    <th>name</th>
+    <th>phone</th>
+    <th>email</th>
+</tr>
+</thead>
+
+<tbody id="container">
+</tbody>
+</table>
+
+     <script>
+        function fetchdata()
+        {
+            const xhr=new XMLHttpRequest();
+            xhr.open("GET","https://jsonplaceholder.typicode.com/users");
+
+            xhr.send();
+            xhr.onreadystatechange=() =>{
+    
+                if(xhr.readyState==4 && xhr.status==200){
+              //  console.log(xhr.responseText);//get json object in text format
+                const data=JSON.parse(xhr.responseText);
+                console.log(data);
+                const container1=document .getElementById("container");
+                for(i=0;i<data.length;i++){
+                    const row=document.createElement("tr");
+                    const idcol=document.createElement("td");//for each row we need to create col
+                    const namecol=document.createElement("td");
+                   const phonecol= document.createElement("td");
+                   const mailcol= document.createElement("td");
+                   idcol.innerHTML=data[i].id;
+                   namecol.innerHTML=data[i].name;
+                   phonecol.innerHTML=data[i].phone;
+                   mailcol.innerHTML=data[i].email;
+                   row.appendChild(idcol);
+                   row.appendChild(namecol);
+                   row.appendChild(phonecol);
+                   row.appendChild(mailcol);
+                    container.appendChild(row);
+                }
+                }
+            }
+
+        }
+
+
+
+    </script>
+
+
+
+</body>
+</html>
+=======================================================================
+JQUERY
+
+ASSIGNMENT
+FADING EFFECTS IN JQUERY
+SLIDING EFFECTS IN JQUERY
+==================================================
+VANILLA JAVASCRIPT CODE
+Sample code to change color of every h1 tag:
+
+var h1tags = document.querySelectorAll('h1')
+for(h1 of h1tags){
+h1.style.color='red'
+}
+
+
+
+jQuery CODE:
+-------
+$('h1').css('color','red')
+
+==========================================================================
+jQuery is a lightweight, "write less, do more", JavaScript library.
+The purpose of jQuery is to make it much easier to use JavaScript on your website.
+jQuery takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code.
+jQuery also simplifies a lot of the complicated things from JavaScript, like AJAX calls and DOM manipulation.
+The jQuery library contains the following features:
+
+HTML/DOM manipulation
+CSS manipulation
+HTML event methods
+Effects and animations
+AJAX
+
+
+connect jquery to html by 2 ways
+1. locally 
+2. By CDN(content delivery n/w)
+
+By using CDN:
+www.code.jquery.com
+ <script
+ src="http://code.jquery.com/jquery-3.3.1.js"
+ integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+ crossorigin="anonymous"></script>
+
+============================================================================
+
+
+jQuery Selectors:
+-----------------
+Vanilla Java script:
+getElementById()
+getElementsByClassName()
+getElementsByTagName()
+querySelector()
+querySelectorAll()
+
+
+in jQuery we have only one way to select html element: $ symbol
+$ ===>querySelectorAll()
+$('h1') ===>document.querySelectorAll('h1')
+
+ ================================================================
+$(document).ready()
+The $(document).ready() method allows us to execute a function when the document is fully loaded. It is good practice to wait for the document to be fully loaded and ready before working with it.
+Here are some examples of actions that can fail if methods are run before the document is fully loaded:
+
+Trying to hide an element that is not created yet
+Trying to get the size of an image that is not loaded yet
+================================================
+
+
+
+Manipulate HTML Elements:
+-------------------------
+Once we grab elements by using $ symbol, we can manipulate by
+using css() method.
+
+$(selector).css(property,value)
+$('h1').css('color','white')
+$('h1').css('background','blue')
+$('h1').css('border','5px solid green')
+
+We can save selected html element by using variable.
+var x = $('h1')
+x.css('color','white')
+x.css('background','red')
+x.css('border','5px solid green')
+
+Instead of passing parameters one by one, we can create  object and
+pass that object directly.
+var x = $('h1')
+var myCSS={
+color: 'white',
+background: 'green',
+border: '5px solid red'
+}
+x.css(myCSS)
+========================================================
+$('h1').css({
+color: 'white',
+background: 'green',
+border: '5px solid red'
+})
+***Note: We can use $() to select html elements, and css() to  manipulate(styles) html elements.
+$('h1')--->querySelectorAll() //All the html elements are going to be selected
+
+How to select a particular HTML element instead of all matched
+elements:
+------------------------------------------------------------------------
+=================================================================================================
+Q1. Write Vanilla java script and jQuery code to change all h1 tags text
+color as white and background as red?
+
+Vanilla java script:
+--------------------
+var allh1= document.querySelectorAll('h1')
+for(h1 of allh1){
+h1.style.color='white';
+h1.style.background='red';
+}
+jQuery code:
+-----------
+//create javascript object
+var mystyle={
+color:'white',
+background:'red'
+}
+$('h1').css(mystyle)
+
+Instead of this
+$('h1').css({
+color:'white',
+background:'red'
+})
+===========================================================================================
+Q2. Write vanilla javascript and jquery code to set all li tags font size
+as 50px?
+Vanilla java script:
+--------------------
+var allli= document.querySelectorAll('li')
+for(li of allli){
+li.style.fontSize='50px';
+}
+
+jQuery:
+-------
+$('li').css('fontSize','50px')
+
+================================================================================
+===================================================================================
+jQuery Selectors
+jQuery selectors allow you to select and manipulate HTML element(s).
+
+jQuery selectors are used to "find" (or select) HTML elements based on their name, id, classes, types, attributes, values of attributes and much more. It's based on the existing CSS Selectors, and in addition, it has some own custom selectors.
+
+All selectors in jQuery start with the dollar sign and parentheses: $().
+
+
+1)The element Selector
+The jQuery element selector selects elements based on the element name.
+You can select all <p> elements on a page like this:$("p")
+
+
+Example:
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(()=>{
+  $("p").css('color','red')
+});
+</script>
+</head>
+<body>
+<h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>
+==================================================
+2)The #id Selector
+The jQuery #id selector uses the id attribute of an HTML tag to find the specific element.
+
+An id should be unique within a page, so you should use the #id selector when you want to find a single, unique element.
+
+To find an element with a specific id, write a hash character, followed by the id of the HTML element:
+
+$("#test")
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(()=>{
+  $("#id1").css('color','red')
+});
+</script>
+</head>
+<body>
+
+<h2>This is a heading</h2>
+
+<p id="id1">This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>
+=========================================================
+3)The .class Selector
+The jQuery .class selector finds elements with a specific class.
+
+To find elements with a specific class, write a period character, followed by the name of the class:
+
+$(".test")
+
+============================================================================
+MORE SELECTORS
+1) $("*")	Selects all elements
+2)$(this) selects current html elements
+<!DOCTYPE html>
+<html>
+<head>
+	<script
+	src="http://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+   
+   
+</head>
+
+
+<body>
+
+<h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me</button>
+<script>
+	$(document).ready(function(){
+	  $("button").click(function(){
+		$(this).hide();
+	  });
+	});
+	</script>
+</body>
+</html>
+==================================
+3)$("p.intro")	Selects all <p> elements with class="intro"
+4)$('element:first')--->only first matched
+5)$('element:last')--->only last matched
+6)$('element:first-of-type')--->only first matched
+7)$('element:nth-of-type(2)')--->only 2nd matched
+8)$('element:nth-of-type(even)')--->only evenly matched
+9)$('element:nth-of-type(odd)')--->only odd matched
+10)$("ul li:first")	Selects the first <li> element of the first <ul>
+
+eg:
+$('h1').css('color','red')--->Select all h1 tags
+$('h1:first').css('color','red')--->selects only first h1
+$('h1').first().css('color','red')--->selects only first h1
+$('h1:first-of-type').css('color','red')--->selects only first h1
+$('h1:nth-of-type(1)').css('color','red')--->selects only first h1
+$('h1:nth-of-type(3)').css('color','red')--->selects only 3rd h1
+$('h1:last').css('color','red')--->selects only last h1
+$('h1').last().css('color','red')--->selects only last h1
+$('h1:nth-of-type(even)').css('color','red')--->selects only even h1
+$('h1:nth-of-type(odd)').css('color','red')--->selects only odd h1
+
+
+
+======================================================================
+
+------------------
+demo.html:
+----------
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script></head>
+<body>
+<p> This is the first paragraph</p>
+<p id='second'> This is the second paragraph</p>
+<p class="remaining"> This is the third paragraph</p>
+<p class="remaining"> This is the fourth paragraph</p>
+</body>
+</html>
+
+Q1. Select all p tags and set background as green?
+$('p').css('background','green')
+
+Q2. Select all p tags with class 'remaining' and make them 200px
+width
+
+$('.remaining').css('width','200px')
+
+Q3. Select all <p> tags with id='second' and give red solid 10px
+border?
+
+$('#second').css('border','10px solid red')
+Q4. Select only third <p> tag and change font size as 30px?
+
+$('p:nth-of-type(3)').css('fontSize','30px')
+=========================================================================================
+how to manipulate text?
+The Most commonly used jQuery Methods:
+--------------------------------------
+1. text()-
+2. html()
+3. attr()
+4. val()
+5. addClass()
+6. removeClass()
+7. toggleClass()
+
+1. text():
+----------
+==>text() - Sets or returns the text content of selected elements
+==>It acts as both getter and setter method.
+
+text()---->getter method to get content
+text(content)--->setter method to set content.
+
+
+eg-1: To get content of h1 tag
+$('h1').text()
+
+eg-2: To get text of all and first li tags
+$('li').text()
+$('li:first').text()
+
+eg-3:
+To set h1 content as 'WPT'
+$('h1').text('WPT')
+
+=======================================================
+2. html()
+---------
+==>html() - Sets or returns the content of selected elements (including HTML markup)
+==>Get the HTML contents of the first element in the set of matched
+elements and set the HTML contents of every matched element.
+
+$('h1').html()
+$('li').html()
+$('ul').html()   or    $('ul').text()  
+$('li').html(`<a href='https://amazon.com'>Amazon</a>`)
+
+
+
+3. attr():
+----------
+==>The jQuery attr() method is used to get attribute values.
+==>Get the value of an attribute for the first element in the set of matched elements or
+==>set one or more attributes for every matched element.
+attr(attributename) --->To get the value of the specified attribute of the first matched element.
+attr(attributename,attributevalue)--->If the specified attribute already available then old value will be repalced with new value in
+every matched element.
+If the specified attribute is not already available then this new attribute will be set.
+
+<img src='baby.jpg'>
+$('img').attr('src') 		//what is the value associated with src attribute
+$('img').attr('src','sunny.jpg')
+$('img').attr('height',50px)
+$('img').attr('width',500);
+
+
+
+======================================================================
+program:
+
+1) To Set Width and Height of every Image Properly
+$('img').css({width:'150px',height:'150px'});
+
+2) To get src Attribute Value of the First Image
+$('img').attr('src')
+
+3)To set src attribute of all images with our new image.
+$('img').attr('src','path of new img');
+
+4. To change only first image scr attribute value:
+------------------------------------------------
+$('img').first().attr('src','path of new img');
+
+==================================================================================================
+
+
+Demo for getting and setting type attribute of input tag:
+---------------------------------------------------------
+User Input: <input type='text'>
+tag name: input
+attribute name: type
+eg-1: To get value of type attribute of input tag
+$('input').attr('type')
+eg-2: To set the value of type attribute with color:
+$('input').attr('type','color')
+eg-3: To set the value of type attribute with 'checkbox':
+$('input').attr('type','checkbox')
+
+
+
+======================================================
+4. val():
+---------
+==>val() - Sets or returns the value of form fields
+=>Get the current value of the first element in the set of matched
+elements or set the value of every matched element.
+eg:
+value entered in the text box
+which value selected from the dropdown box
+
+Enter Name: <input type='text' name='user1' value="abc" >
+Enter Name: <input type='text' name='user1' value="xyz">
+
+1. To get value provided by enduser for the first input tag?
+$('input').val()
+
+2. To get value provided by enduser for the second input tag?
+$('input:nth-of-type(2)').val()
+
+3. To set for all input tags as sunny as the value
+$('input').val('sunny')
+$('input:nth-of-type(2)').val('sunny')
+
+$('input').val('')
+
+==================================================================================================
+addClass()--->To add specified class to the set of matched elements.
+The addClass() method adds one or more class names to the selected elements.
+This method does not remove existing class attributes, it only adds one or more class names to the class attribute.
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").addClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+
+
+removeClass()--->To remove specified class from the set of matched elements
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").removeClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+==================================================
+
+
+
+toggleClass()--->add/remove css class
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").toggleClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+========================================================
+eg-1: Add high class for every li tag
+$('li').addClass('high')
+eg-2: For every even li, remove high class
+$('li:nth-of-type(even)').removeClass('high')
+eg-3: For 2nd li add class completed
+$('li:nth-of-type(2)').addClass('completed')
+$('li:nth-of-type(2)').addClass('low')
+eg-4: toggle class high for every li tag:
+$('li').toggleClass('high')
+=====================================================================================================================
+
+
+
+Event Handling by using jQuery:
+-------------------------------
+Event Handling by using jQuery: We can implement event handling to make our html elements interactive.
+Examples:
+    moving a mouse over an element
+    selecting a radio button
+    clicking on an element
+
+
+3 top most commonly used methods in jQuery Event handling:
+-------------------------------------------------------
+1. click()  dblclick()
+2. keypress()
+
+
+1. click():
+----------
+==>In jQuery, most DOM events have an equivalent jQuery method.
+==>To assign a click event to all paragraphs on a page, you can do this:
+$("p").click();
+We can use click() method to add click listener to the element.
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-
+243
+u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>jQuery Event Handling Demo</h1>
+<button type="button" name="button">Dont Sleep First
+Warning</button>
+<button type="button" name="button">Dont Sleep Second
+Warning</button>
+<button type="button" name="button">Dont Sleep Third
+Warning</button>
+
+<script>
+$('h1').click(function(){
+    alert('Click any button, you will get greetings message')
+    })
+    $('button:first').click(function(){
+    alert('Hello Dont Sleep')
+    $(this).css('background','yellow')
+    })
+    $('button:nth-of-type(2)').click(function(){
+    alert('Hello Dont Sleep, I will beat you')
+    $(this).css('background','orange')
+    })
+    $('button:last').click(function(){
+    alert('Hello Stupid, dont sleep, I will kill you')
+    $(this).css('background','red')
+    })
+    </script>
+	</body>
+</html>
+=======================================================
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+  $("p").dblclick(function(){
+    $(this).hide();
+  });
+});
+</script>
+</head>
+<body>
+
+<p>If you double-click on me, I will disappear.</p>
+<p>Click me away!</p>
+<p>Click me too!</p>
+
+</body>
+</html>
+=======================================================
+
+
+2. keypress():
+--------------
+ ==>We can use this method to add keypress listener to elements.
+keydown - The key is on its way down
+keypress - The key is pressed down
+keyup - The key is released
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<input type="text" id="id1">
+<script>
+$('input').keypress(function(event){
+    if(event.which >=65 && event.which <= 90){
+    alert('Hello you are pressing A -Z!!!')
+    }
+    })
+
+    </script>
+</body>
+</html>
+
+
+
+=======================================================================
+3.mouseenter()
+
+The mouseenter() method attaches an event handler function to an HTML element.
+The function is executed when the mouse pointer enters the HTML element:
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  $("#p1").mouseenter(function(){
+    alert("You entered p1!");
+  });
+});
+</script>
+</head>
+<body>
+​
+<div id="p1" style="height: 100px; width: 100px;background-color: aqua;">Enter this paragraph.</div>
+​
+</body>
+</html>
+​
+ASSIGNMENT:
+mouseleave:The mouseleave() method attaches an event handler function to an HTML element.
+The function is executed when the mouse pointer leaves the HTML element:
+
+
+hover:The hover() method takes two functions and is a combination of the mouseenter() and mouseleave() methods.
+
+The first function is executed when the mouse enters the HTML element, and the second function is executed when the mouse leaves the HTML element:
+======================================================================================
+ASSIGNMENT
+FADING EFFECTS IN JQUERY
+SLIDING EFFECTS IN JQUERY
+==================================================
+VANILLA JAVASCRIPT CODE
+Sample code to change color of every h1 tag:
+
+var h1tags = document.querySelectorAll('h1')
+for(h1 of h1tags){
+h1.style.color='red'
+}
+
+
+
+jQuery CODE:
+-------
+$('h1').css('color','red')
+
+==========================================================================
+jQuery is a lightweight, "write less, do more", JavaScript library.
+The purpose of jQuery is to make it much easier to use JavaScript on your website.
+jQuery takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code.
+jQuery also simplifies a lot of the complicated things from JavaScript, like AJAX calls and DOM manipulation.
+The jQuery library contains the following features:
+
+HTML/DOM manipulation
+CSS manipulation
+HTML event methods
+Effects and animations
+AJAX
+
+
+connect jquery to html by 2 ways
+1. locally 
+2. By CDN(content delivery n/w)
+
+By using CDN:
+www.code.jquery.com
+ <script
+ src="http://code.jquery.com/jquery-3.3.1.js"
+ integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+ crossorigin="anonymous"></script>
+
+============================================================================
+
+
+jQuery Selectors:
+-----------------
+Vanilla Java script:
+getElementById()
+getElementsByClassName()
+getElementsByTagName()
+querySelector()
+querySelectorAll()
+
+
+in jQuery we have only one way to select html element: $ symbol
+$ ===>querySelectorAll()
+$('h1') ===>document.querySelectorAll('h1')
+
+ ================================================================
+$(document).ready()
+The $(document).ready() method allows us to execute a function when the document is fully loaded. It is good practice to wait for the document to be fully loaded and ready before working with it.
+Here are some examples of actions that can fail if methods are run before the document is fully loaded:
+
+Trying to hide an element that is not created yet
+Trying to get the size of an image that is not loaded yet
+================================================
+
+
+
+Manipulate HTML Elements:
+-------------------------
+Once we grab elements by using $ symbol, we can manipulate by
+using css() method.
+
+$(selector).css(property,value)
+$('h1').css('color','white')
+$('h1').css('background','blue')
+$('h1').css('border','5px solid green')
+
+We can save selected html element by using variable.
+var x = $('h1')
+x.css('color','white')
+x.css('background','red')
+x.css('border','5px solid green')
+
+Instead of passing parameters one by one, we can create  object and
+pass that object directly.
+var x = $('h1')
+var myCSS={
+color: 'white',
+background: 'green',
+border: '5px solid red'
+}
+x.css(myCSS)
+========================================================
+$('h1').css({
+color: 'white',
+background: 'green',
+border: '5px solid red'
+})
+***Note: We can use $() to select html elements, and css() to  manipulate(styles) html elements.
+$('h1')--->querySelectorAll() //All the html elements are going to be selected
+
+How to select a particular HTML element instead of all matched
+elements:
+------------------------------------------------------------------------
+=================================================================================================
+Q1. Write Vanilla java script and jQuery code to change all h1 tags text
+color as white and background as red?
+
+Vanilla java script:
+--------------------
+var allh1= document.querySelectorAll('h1')
+for(h1 of allh1){
+h1.style.color='white';
+h1.style.background='red';
+}
+jQuery code:
+-----------
+//create javascript object
+var mystyle={
+color:'white',
+background:'red'
+}
+$('h1').css(mystyle)
+
+Instead of this
+$('h1').css({
+color:'white',
+background:'red'
+})
+===========================================================================================
+Q2. Write vanilla javascript and jquery code to set all li tags font size
+as 50px?
+Vanilla java script:
+--------------------
+var allli= document.querySelectorAll('li')
+for(li of allli){
+li.style.fontSize='50px';
+}
+
+jQuery:
+-------
+$('li').css('fontSize','50px')
+
+================================================================================
+===================================================================================
+jQuery Selectors
+jQuery selectors allow you to select and manipulate HTML element(s).
+
+jQuery selectors are used to "find" (or select) HTML elements based on their name, id, classes, types, attributes, values of attributes and much more. It's based on the existing CSS Selectors, and in addition, it has some own custom selectors.
+
+All selectors in jQuery start with the dollar sign and parentheses: $().
+
+
+1)The element Selector
+The jQuery element selector selects elements based on the element name.
+You can select all <p> elements on a page like this:$("p")
+
+
+Example:
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(()=>{
+  $("p").css('color','red')
+});
+</script>
+</head>
+<body>
+<h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>
+==================================================
+2)The #id Selector
+The jQuery #id selector uses the id attribute of an HTML tag to find the specific element.
+
+An id should be unique within a page, so you should use the #id selector when you want to find a single, unique element.
+
+To find an element with a specific id, write a hash character, followed by the id of the HTML element:
+
+$("#test")
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(()=>{
+  $("#id1").css('color','red')
+});
+</script>
+</head>
+<body>
+
+<h2>This is a heading</h2>
+
+<p id="id1">This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me to hide paragraphs</button>
+
+</body>
+</html>
+=========================================================
+3)The .class Selector
+The jQuery .class selector finds elements with a specific class.
+
+To find elements with a specific class, write a period character, followed by the name of the class:
+
+$(".test")
+
+============================================================================
+MORE SELECTORS
+1) $("*")	Selects all elements
+2)$(this) selects current html elements
+<!DOCTYPE html>
+<html>
+<head>
+	<script
+	src="http://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+   
+   
+</head>
+
+
+<body>
+
+<h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me</button>
+<script>
+	$(document).ready(function(){
+	  $("button").click(function(){
+		$(this).hide();
+	  });
+	});
+	</script>
+</body>
+</html>
+==================================
+3)$("p.intro")	Selects all <p> elements with class="intro"
+4)$('element:first')--->only first matched
+5)$('element:last')--->only last matched
+6)$('element:first-of-type')--->only first matched
+7)$('element:nth-of-type(2)')--->only 2nd matched
+8)$('element:nth-of-type(even)')--->only evenly matched
+9)$('element:nth-of-type(odd)')--->only odd matched
+10)$("ul li:first")	Selects the first <li> element of the first <ul>
+
+eg:
+$('h1').css('color','red')--->Select all h1 tags
+$('h1:first').css('color','red')--->selects only first h1
+$('h1').first().css('color','red')--->selects only first h1
+$('h1:first-of-type').css('color','red')--->selects only first h1
+$('h1:nth-of-type(1)').css('color','red')--->selects only first h1
+$('h1:nth-of-type(3)').css('color','red')--->selects only 3rd h1
+$('h1:last').css('color','red')--->selects only last h1
+$('h1').last().css('color','red')--->selects only last h1
+$('h1:nth-of-type(even)').css('color','red')--->selects only even h1
+$('h1:nth-of-type(odd)').css('color','red')--->selects only odd h1
+
+
+
+======================================================================
+
+------------------
+demo.html:
+----------
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script></head>
+<body>
+<p> This is the first paragraph</p>
+<p id='second'> This is the second paragraph</p>
+<p class="remaining"> This is the third paragraph</p>
+<p class="remaining"> This is the fourth paragraph</p>
+</body>
+</html>
+
+Q1. Select all p tags and set background as green?
+$('p').css('background','green')
+
+Q2. Select all p tags with class 'remaining' and make them 200px
+width
+
+$('.remaining').css('width','200px')
+
+Q3. Select all <p> tags with id='second' and give red solid 10px
+border?
+
+$('#second').css('border','10px solid red')
+Q4. Select only third <p> tag and change font size as 30px?
+
+$('p:nth-of-type(3)').css('fontSize','30px')
+=========================================================================================
+how to manipulate text?
+The Most commonly used jQuery Methods:
+--------------------------------------
+1. text()-
+2. html()
+3. attr()
+4. val()
+5. addClass()
+6. removeClass()
+7. toggleClass()
+
+1. text():
+----------
+==>text() - Sets or returns the text content of selected elements
+==>It acts as both getter and setter method.
+
+text()---->getter method to get content
+text(content)--->setter method to set content.
+
+
+eg-1: To get content of h1 tag
+$('h1').text()
+
+eg-2: To get text of all and first li tags
+$('li').text()
+$('li:first').text()
+
+eg-3:
+To set h1 content as 'WPT'
+$('h1').text('WPT')
+
+=======================================================
+2. html()
+---------
+==>html() - Sets or returns the content of selected elements (including HTML markup)
+==>Get the HTML contents of the first element in the set of matched
+elements and set the HTML contents of every matched element.
+
+$('h1').html()
+$('li').html()
+$('ul').html()   or    $('ul').text()  
+$('li').html(`<a href='https://amazon.com'>Amazon</a>`)
+
+
+
+3. attr():
+----------
+==>The jQuery attr() method is used to get attribute values.
+==>Get the value of an attribute for the first element in the set of matched elements or
+==>set one or more attributes for every matched element.
+attr(attributename) --->To get the value of the specified attribute of the first matched element.
+attr(attributename,attributevalue)--->If the specified attribute already available then old value will be repalced with new value in
+every matched element.
+If the specified attribute is not already available then this new attribute will be set.
+
+<img src='baby.jpg'>
+$('img').attr('src') 		//what is the value associated with src attribute
+$('img').attr('src','sunny.jpg')
+$('img').attr('height',50px)
+$('img').attr('width',500);
+
+
+
+======================================================================
+program:
+
+1) To Set Width and Height of every Image Properly
+$('img').css({width:'150px',height:'150px'});
+
+2) To get src Attribute Value of the First Image
+$('img').attr('src')
+
+3)To set src attribute of all images with our new image.
+$('img').attr('src','path of new img');
+
+4. To change only first image scr attribute value:
+------------------------------------------------
+$('img').first().attr('src','path of new img');
+
+==================================================================================================
+
+
+Demo for getting and setting type attribute of input tag:
+---------------------------------------------------------
+User Input: <input type='text'>
+tag name: input
+attribute name: type
+eg-1: To get value of type attribute of input tag
+$('input').attr('type')
+eg-2: To set the value of type attribute with color:
+$('input').attr('type','color')
+eg-3: To set the value of type attribute with 'checkbox':
+$('input').attr('type','checkbox')
+
+
+
+======================================================
+4. val():
+---------
+==>val() - Sets or returns the value of form fields
+=>Get the current value of the first element in the set of matched
+elements or set the value of every matched element.
+eg:
+value entered in the text box
+which value selected from the dropdown box
+
+Enter Name: <input type='text' name='user1' value="abc" >
+Enter Name: <input type='text' name='user1' value="xyz">
+
+1. To get value provided by enduser for the first input tag?
+$('input').val()
+
+2. To get value provided by enduser for the second input tag?
+$('input:nth-of-type(2)').val()
+
+3. To set for all input tags as sunny as the value
+$('input').val('sunny')
+$('input:nth-of-type(2)').val('sunny')
+
+$('input').val('')
+
+==================================================================================================
+addClass()--->To add specified class to the set of matched elements.
+The addClass() method adds one or more class names to the selected elements.
+This method does not remove existing class attributes, it only adds one or more class names to the class attribute.
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").addClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+
+
+removeClass()--->To remove specified class from the set of matched elements
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").removeClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+==================================================
+
+
+
+toggleClass()--->add/remove css class
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+.intro {
+  font-size: 75px;
+  color: red;
+}
+</style>
+<script>
+	$(document).ready(function(){
+  $("button").click(function(){
+    $("p:first").toggleClass("intro");
+  });
+});
+</script>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Add a class name to the first p element</button>
+
+</body>
+</html>
+========================================================
+eg-1: Add high class for every li tag
+$('li').addClass('high')
+eg-2: For every even li, remove high class
+$('li:nth-of-type(even)').removeClass('high')
+eg-3: For 2nd li add class completed
+$('li:nth-of-type(2)').addClass('completed')
+$('li:nth-of-type(2)').addClass('low')
+eg-4: toggle class high for every li tag:
+$('li').toggleClass('high')
+=====================================================================================================================
+
+
+
+Event Handling by using jQuery:
+-------------------------------
+Event Handling by using jQuery: We can implement event handling to make our html elements interactive.
+Examples:
+    moving a mouse over an element
+    selecting a radio button
+    clicking on an element
+
+
+3 top most commonly used methods in jQuery Event handling:
+-------------------------------------------------------
+1. click()  dblclick()
+2. keypress()
+
+
+1. click():
+----------
+==>In jQuery, most DOM events have an equivalent jQuery method.
+==>To assign a click event to all paragraphs on a page, you can do this:
+$("p").click();
+We can use click() method to add click listener to the element.
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+integrity="sha256-
+243
+u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>jQuery Event Handling Demo</h1>
+<button type="button" name="button">Dont Sleep First
+Warning</button>
+<button type="button" name="button">Dont Sleep Second
+Warning</button>
+<button type="button" name="button">Dont Sleep Third
+Warning</button>
+
+<script>
+$('h1').click(function(){
+    alert('Click any button, you will get greetings message')
+    })
+    $('button:first').click(function(){
+    alert('Hello Dont Sleep')
+    $(this).css('background','yellow')
+    })
+    $('button:nth-of-type(2)').click(function(){
+    alert('Hello Dont Sleep, I will beat you')
+    $(this).css('background','orange')
+    })
+    $('button:last').click(function(){
+    alert('Hello Stupid, dont sleep, I will kill you')
+    $(this).css('background','red')
+    })
+    </script>
+	</body>
+</html>
+=======================================================
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+  $("p").dblclick(function(){
+    $(this).hide();
+  });
+});
+</script>
+</head>
+<body>
+
+<p>If you double-click on me, I will disappear.</p>
+<p>Click me away!</p>
+<p>Click me too!</p>
+
+</body>
+</html>
+=======================================================
+
+
+2. keypress():
+--------------
+ ==>We can use this method to add keypress listener to elements.
+keydown - The key is on its way down
+keypress - The key is pressed down
+keyup - The key is released
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<input type="text" id="id1">
+<script>
+$('input').keypress(function(event){
+    if(event.which >=65 && event.which <= 90){
+    alert('Hello you are pressing A -Z!!!')
+    }
+    })
+
+    </script>
+</body>
+</html>
+
+
+
+=======================================================================
+3.mouseenter()
+
+The mouseenter() method attaches an event handler function to an HTML element.
+The function is executed when the mouse pointer enters the HTML element:
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  $("#p1").mouseenter(function(){
+    alert("You entered p1!");
+  });
+});
+</script>
+</head>
+<body>
+​
+<div id="p1" style="height: 100px; width: 100px;background-color: aqua;">Enter this paragraph.</div>
+​
+</body>
+</html>
+​
+ASSIGNMENT:
+mouseleave:The mouseleave() method attaches an event handler function to an HTML element.
+The function is executed when the mouse pointer leaves the HTML element:
+
+
+hover:The hover() method takes two functions and is a combination of the mouseenter() and mouseleave() methods.
+
+The first function is executed when the mouse enters the HTML element, and the second function is executed when the mouse leaves the HTML element:
+======================================================================================
+
+jQuery Effects:
+----------------
+jQuery provides several inbuilt effects. The main important effects
+are:
+1. Fading effects
+2. Sliding effects
+1. Fading effects:
+------------------
+I) Fading Effects:
+jQuery defines the following methods for fading purposes
+1) fadeOut():
+Hide the matched elements by fading them to transparent.
+2) fadeIn():
+Display the matched elements which are fadeout
+3) fadeToggle():
+Display or hide the matched elements
+If already fadeOut then fadeIn will be performed.
+If already fadeIn then fadeOut will be performed
+Fadeout--->FadeIn
+FadeIn--->FadeOut
+
+
+$('button').on('click',function(){
+$('div').fadeOut(2000);
+})
+
+$('button').on('click',function(){
+$('div').fadeToggle(3000);
+})
+
+==============================================================================
+==========

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+    <body>
+        <img id="image1" src="light off.png" alt="bulb off" width="150px"><br>
+        <input type="button" value="on" id="btn1" onclick="togglebulb('on')">
+        <input type="button" value="off" id="btn2" onclick="togglebulb('off')">
+        <script>
+            function togglebulb(state){
+                if(state== 'on'){
+                    document.getElementById("image1").src='light on.png';
+                }
+                else{
+                    document.getElementById("image1").src='light off.png';
+                }
+            }
+        </script>
+    </body>
+</html>

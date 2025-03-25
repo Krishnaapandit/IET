@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Form</title>
+    <style>
+        
+        .container {
+            background: rgb(196, 191, 191);
+            padding: 20px;
+            border-radius: 5px;
+            margin: auto;
+            text-align: center;
+            width: 400px;
+            height: 400px;
+            
+        }
+        .error {
+            color: red;
+        }
+        .inp{
+            width: 275px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+        button{
+            height: 35px;
+            width: 283px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: rgb(4, 57, 70);
+            color: white;
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>LOG in Form</h2><br>
+
+    <input class="inp" placeholder="Enter Username" type="text" id="username" required><br><br>
+    <input class="inp" placeholder="Enter Password" type="password" id="password" required><br><br>
+
+    <button onclick="checkLogin()">LOG IN</button>
+    <p id="message"></p>
+</div>
+
+<script>
+    function checkLogin() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const message = document.getElementById('message');
+        
+        const users = [
+            {username: 'iet', password: '123'},
+            {username: 'cdac', password: '456'},
+            {username: 'software', password: '789'}
+        ];
+
+        let userFound = false;
+
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === username && users[i].password === password) {
+                userFound = true;
+                break;
+            }
+        }
+
+        if (userFound) {
+            message.textContent = "Welcome to IET";
+            message.style.color = "green";
+        } else {
+            message.textContent = "Error: Invalid username or password.";
+            message.style.color = "red";
+        }
+
+        document.getElementById('username').value = ''
+        document.getElementById('password').value = ''
+    }
+</script>
+
+</body>
+</html>

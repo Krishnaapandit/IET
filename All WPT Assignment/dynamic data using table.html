@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang=" en">
+    <head>
+    </head>
+    <body>
+        <input type="button" value="fetch" onclick="fetch()"><br> <br>
+        <table border="1" cellpadding="3" cellspacing="1">
+            <thead>            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>phone</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody id="container"></tbody>
+
+
+        </table>
+        <script>
+            function fetch(){
+                const a=new XMLHttpRequest();
+                a.open("GET","https://jsonplaceholder.typicode.com/users");
+                a.send();
+
+                a.onreadystatechange=()=>{
+                    if(a.readyState==4 && a.status==200){
+                        console.log(a.responseText);
+
+                    const b=JSON.parse(a.responseText);
+                    console.log(b);
+                 
+
+                    const c=document.getElementById("container");
+                    for(i=0;i<b.length;i++){
+                        const row1=document.createElement("tr");
+                        const idcol=document.createElement("td");
+                        const namecol=document.createElement("td");
+                        const phonecol=document.createElement("td");
+                        const emailcol=document.createElement("td");
+
+                        idcol.innerHTML=b[i].id;
+                        namecol.innerHTML=b[i].name;
+                        phonecol.innerHTML=b[i].phone;
+                        emailcol.innerHTML=b[i].email;
+
+                        row1.appendChild(idcol);
+                        row1.appendChild(namecol);
+                        row1.appendChild(phonecol);
+                        row1.appendChild(emailcol);
+                        container.appendChild(row1);
+                    
+                    }
+                }
+
+                }
+            }
+        </script>
+    </body>
+</html>

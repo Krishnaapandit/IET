@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width:260px;
+            height:260px;
+            border:2px solid;
+            margin-right:40px;
+        }
+    </style>
+</head>
+<body>
+    <h3 align =center>Demo on DOM event handling</h3>
+    <div align="center">
+        <img id="img1" src="PIC1.jpg"/>
+        <img id="img2" src="pic2.jpg"/>
+        <img id="img3" src="pic3.jpg"/>
+
+    </div>
+</body>
+<script>
+    const im1=document.images[0];
+    const im2=document.images[1];
+    const im3=document.images[2];
+
+    im1.onmouseover=function(){
+        im1.src="pic4.jpg"
+    };
+    im1.onmouseout=function(){
+        im1.src="PIC1.jpg"
+    };
+
+    im2.onmouseover=function(){
+        im2.src="pic5.jpg"
+    };
+    im2.onmouseout=function(){
+        im2.src="pic2.jpg"
+    };
+
+    im3.onmouseover=function(){
+        im3.src="pic6.jpg"
+    };
+    im3.onmouseout=function(){
+        im3.src="pic3.jpg"
+    };
+</script>
+</html>

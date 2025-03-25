@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <style>
+            h1{
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>MARVEL KE SUPERHEROS SE MILNE KE LIYE YA CLICK KARE</h1>
+    <button type="button" name="button">LOHA PURuSH</button>
+    <button type="button" name="button">KATPAN AMERICA</button>
+    <button type="button" name="button">HAARA HULK</button>
+    <button type="button" name="button">ODIN PUTRA THOR</button>
+
+    <script>
+        $('h1').click(function(){
+            alert('AVENGERSSSSS!! ASSEMBLE')
+        })
+        $('button:first').click(function(){
+            alert('I AM IRON MAN')
+            $(this).css('background','RED')
+        })
+        $('button:nth-of-type(2)').click(function(){
+            alert('I AM STEVE ROGERS')
+            $(this).css('background','BLUE')
+        })
+        $('button:nth-of-type(3)').click(function(){
+            alert('I AM HULK')
+            $(this).css('background','green')
+        })
+        $('button:last').click(function(){
+            alert('I AM ODIN PUTRA THOR')
+         $(this).css('background','AQUA')   
+        })
+
+    </script>
+    </body>
+    
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Images Per Row</title>
+    <style>
+        #f1 {
+            border: 2px solid black;
+            width: 400px;
+            height: 530px;
+            margin: auto;
+        }
+
+        #l1 {
+            font-size: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .image-container img {
+            /* border: 1px solid black; */
+            width: 100px;
+            height: 130px;
+            border-radius: 50%;
+            margin: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <fieldset id="f1">
+        <legend id="l1"><h1>Collection of Photos</h1></legend>
+        <div class="image-container">
+            <img src="spider.jpg" alt="Image 1">
+            <img src="spider.jpg" alt="Image 2">
+            <img src="spider.jpg" alt="Image 3">
+            <img src="spider.jpg" alt="Image 4">
+            <img src="spider.jpg" alt="Image 5">
+            <img src="spider.jpg" alt="Image 6">
+            <img src="spider.jpg" alt="Image 7">
+            <img src="spider.jpg" alt="Image 8">
+            <img src="spider.jpg" alt="Image 9">
+        </div>
+    </fieldset>
+</body>
+</html>

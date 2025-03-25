@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="'en">
+    <head>
+        <title>Login Page</title>
+        <style>
+            #container{
+                background-color: Grey;
+                height:250px;
+            }
+            h1{
+                margin-top: 220px;
+            }
+            #error{
+                color:red;
+            } 
+            #error1{
+                color:red;
+            } 
+            #name{
+                margin-left:410px;
+            }
+            #pass{
+                margin-left:410px;
+            }
+            #log{
+                margin-top: 10px;
+                margin-left: 470px;
+
+            }
+            #msg1{
+                color:red;
+            }
+            #msg2{
+                color:green;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+        <h1 align="center">Login</h1>
+        <form action="" onsubmit="return validate()">
+        <input type="text" placeholder="Enter the name" id="name" onkeyup="return validateName()">
+        <span id="error"></span><br><br>
+        <input type="password" placeholder="Enter password" id="pass" onkeyup="return validatePass()">
+        <span id="error1" ></span><br><br>
+        <input type="submit" value="Login" id="log" onclick="return message()">
+        <p id="msg1"></p>
+        <p id="msg2"></p>
+    </form>
+    </div>
+    <script>
+        function validate(){
+            var flag=true;
+            const name =document.getElementById("name").value;
+            if(name.length==0){
+                document.getElementById("error").innerHTML="Name is require";
+                flag=false;
+            }
+
+            const passs=document.getElementById("pass").value;
+            if(passs.length==0){
+                document.getElementById("error1").innerHTML='Password is require';
+                flag=false;
+            }
+            return flag;
+        }
+
+        function validateName(){
+         
+            const name =document.getElementById("name").value;
+            if(name.length==0)
+                document.getElementById("error").innerHTML="Name is require";
+            else
+                document.getElementById("error").innerHTML="";   
+        }
+        function validatePass(){
+                const pass= document.getElementById("pass").value;
+            if(pass.length == 0)
+                    document.getElementById("error1").innerHTML="Password is required";
+            else
+                document.getElementById("error1").innerHTML="";
+            }
+
+        const users=[
+            {names:"iet" ,passes:'123'},
+            {names:"cdac" ,passes:'456'},
+            {names:"software" ,passes:'789'}
+        ];
+        function message(){
+            var flags=false;
+            const name=document.getElementById("name").value;
+            const passs=document.getElementById("pass").value;
+            if(users.names==name&& user.passes==passs){ 
+                document.getElementById("msg2").innerHTML="Welcome to IET";
+                flags=true;
+            }
+            else{
+            document.getElementById("msg1").innerHTML="Error Ivalid Username & Password";
+            return flags;
+        }
+            
+        }
+           
+    </script>
+    </body>
+</html>

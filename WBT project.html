@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+#demo{
+  text-align: center;
+  font-size: 20px;
+  margin-top: 250px;
+  transition: color 0.5s ease;
+}
+body {
+  background-color: rgb(204, 204, 204);
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#container {
+  display: flex;
+  background-color: black;
+  height: 60px;
+}
+li {
+  display: inline;
+  padding-left: 80px;
+}
+#btn1 {
+  height: 30px;
+  background-color: rgb(235, 77, 77);
+  margin-left: 410px;
+}
+#img1 {
+  height: 30px;
+  width: 100px;
+}
+#id1{
+  font-size: 25px;
+}
+
+ul li a{
+  color:white;
+  text-decoration: none;
+}
+p{
+  font-size: 20px;
+}
+footer{
+  background-color: black;
+}
+#id2{
+  color:white;
+  font-size: 14px;
+  padding-left: 5px;
+
+}
+#id3{
+  color:white;
+  text-align: center;
+
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div id="container">
+    <ul>
+      <img src="destructor.png" alt="logo" id="img1"/>
+      <li><a href="#Home">Home</a></li>
+      <li><a href="#About-us">About-us</a></li>
+      <li><a href="#Contact-Us">Contact-Us</a></li>
+      <li><a href="#Help-Us">Help-Us</a></li>
+      <li><a href="signup.html">Sign-Up</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</header>
+<h2 id="Home">Home</h2> 
+<p id="demo"></p>
+<input type="button" value="Start/Stop Count Down" id="btn1">
+<!-- <img src="bomb.jpg" id="img1"> -->
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Mar 26, 2025, 19:47:25").getTime();
+
+// Variables to track the timer state and interval
+var isRunning = false;
+var interval;
+
+// Define the countdown function
+function toggleTimer() {
+  if (!isRunning) {
+    isRunning = true;
+    document.getElementById("demo").style.color = "green";
+
+    interval = setInterval(function() {
+      // Get today's date and time
+      var now = new Date().getTime();
+      
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+      
+      // Time calculations for days, hours, minutes, and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+      
+      // If the countdown is over, write some text
+      if (distance < 0) {
+        clearInterval(interval);
+        document.getElementById("demo").innerHTML = "Timer over Thankyou"
+        document.getElementById("demo").style.color = "red";
+        
+        
+    //     function myFunction() {
+    //   var m = document.getElementsByClassName("image");
+    //   m[0].innerHTML = "#img1";
+    // }
+      }
+    }, 1000);
+  } else {
+    isRunning = false;
+    document.getElementById("demo").style.color = "red";
+    clearInterval(interval);
+  }
+}
+
+// Attach the toggle function to the button's onclick event
+document.getElementById("btn1").onclick = toggleTimer;
+</script><br>
+<br>
+<br>
+<br>
+<br>
+<h2 id="About-us">About-us</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci assumenda, quos cum eos esse nihil repudiandae quae! Ex numquam fugit optio impedit corporis distinctio saepe mollitia reiciendis ducimus, eligendi eum similique blanditiis dolorum ipsa velit, dolores consectetur sed deserunt veritatis totam doloribus accusantium, omnis tenetur? Minima repudiandae inventore quos quisquam enim, reprehenderit iste animi architecto quae praesentium illum rerum neque, vitae commodi adipisci accusantium voluptatibus! Hic temporibus sapiente dolores dignissimos mollitia consequuntur libero odit natus repellat enim in atque adipisci facere similique, rem voluptatem ullam beatae esse vero voluptatibus odio placeat, cupiditate pariatur. Illo ut voluptatem saepe voluptate magnam neque!</p>
+<br>
+<br>
+
+<h2 id="Contact-Us">Contact-Us</h2>
+<p>
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident consectetur reprehenderit officiis doloribus veniam hic assumenda, eum sapiente ut molestiae culpa. Quae velit vitae mollitia in repudiandae corporis quas, nostrum adipisci ea cupiditate voluptate, culpa sit vel voluptatibus sed molestiae reiciendis temporibus! Magni eligendi quis aliquam rerum ducimus, est tempora? Quam officia esse placeat temporibus vel, aut unde reprehenderit magni perferendis asperiores enim aperiam repellendus dignissimos facilis quis ipsam, sequi quae. Sequi id in iste quae, natus quos nesciunt doloribus nihil laborum voluptatum ab provident labore dolor odio. Animi quibusdam eaque laudantium placeat neque mollitia enim error voluptas unde quo.
+</p>
+<br>
+<br>
+
+<h2 id="Help-Us">Help-Us</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae modi quo deleniti voluptate quia debitis voluptas? Animi, sunt eveniet illo minus, fuga dicta doloremque architecto sequi molestias voluptatum nam soluta rerum expedita. Cumque veritatis nemo enim! Dolore quis non dolorum quidem? Doloribus delectus veritatis fugit deleniti aperiam quisquam dolores laboriosam est minus quia nesciunt necessitatibus, quasi obcaecati consequatur dicta ea esse, velit quas laudantium eos veniam tempore labore! Debitis ullam, iure animi nulla explicabo quae nam voluptas tempora! Aperiam illum explicabo soluta pariatur beatae nobis ad saepe doloremque? Vel similique numquam beatae accusantium voluptates sit excepturi necessitatibus et aspernatur dolor.</p>
+<br>
+<br>
+<footer>
+  <p id="id2">Creater: Krishna & Piyush </p>
+  <p id="id2">PRN:250245920060 & 250245920061</p>
+  <p id="id3">© 2025 IET PUNE. All rights reserved.</p>
+  </footer>
+
+
+
+</body>
+</html>

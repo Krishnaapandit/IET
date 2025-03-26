@@ -1,0 +1,26 @@
+Suppose today is 26th March 2025, 17:55:00, and we are counting down to 31st December 2025, 00:00:00. Here's what happens:
+
+countDown = 1735689600000 (milliseconds)
+now = 1740401700000 (milliseconds, current time)
+
+diff = countDown - now = 25286400000 (milliseconds)
+
+Breaking it down:
+
+Days = Math.floor(25286400000 / (1000 * 60 * 60 * 24)) = 280 days
+1000 is use here to convert seconds into milliseconds
+1second=1000 milliseconds
+60 Seconds
+60 mintues
+24 hours
+
+
+Hours = Math.floor((25286400000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) = 6 hours
+% returns the remainder of the division. the days portion of the difference is taken out
+the numbers after the decimal value are discarded.
+
+Minutes = Math.floor((25286400000 % (1000 * 60 * 60)) / (1000 * 60)) = 5 minutes
+
+Seconds = Math.floor((25286400000 % (1000 * 60)) / 1000) = 0 seconds
+
+Result: The event is 280 days, 6 hours, 5 minutes, and 0 seconds away.

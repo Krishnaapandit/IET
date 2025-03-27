@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+body {
+  background:linear-gradient(to right,#00A4E4, #FEFEFE)
+}
+
+/* Navigation Bar styling */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  display: flex;
+  background-color: black;
+  height: 60px;
+  align-items: center;
+}
+
+li {
+  display: inline;
+  padding-left: 80px;
+}
+
+#img1 {
+  height: 30px;
+  width: 100px;
+}
+
+ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  color: orange;
+}
+
+/* Styling of Footer */
+footer {
+  background-color: black;
+  height:90px;
+  width:987px;
+}
+
+#id2 {
+  color: white;
+  font-size: 14px;
+  padding-left: 5px;
+  text-align: center;
+  padding-top: 2px;
+}
+
+#id3 {
+  color: white;
+  text-align: center;
+  font-size:20px;
+}
+
+/* Countdown Styling*/
+#demo {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: 200px;
+  color: #333;
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling of Button */
+#btn1 {
+  display: block;
+  width: 250px;
+  height: 50px;
+  margin: 30px auto;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+}
+
+#btn1:hover {
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+  transform: scale(1.05);
+  box-shadow: 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#btn1:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px rgba(0, 0, 0, 0.2);
+}
+p{
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div id="container">
+    <ul>
+      <img src="destructor.png" alt="logo" id="img1" />
+      <li><a href="#Home">Home</a></li>
+      <li><a href="#About-us">About-us</a></li>
+      <li><a href="#Contact-Us">Contact-Us</a></li>
+      <li><a href="#Help-Us">Help-Us</a></li>
+      <li><a href="signup.html">Sign-Up</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</header>
+
+<h2 id="Home" style=" margin-top: 50px;">Home</h2> 
+<p id="demo">00d 00h 00m 00s</p>
+<input type="button" value="Start/Stop Count Down" id="btn1">
+
+<h2 id="About-us"><b>About-us</b></h2>
+<p>The Count down timer is used to count or set a timer for the event which is going to occur in the future. Using the count down timer we can calculate in how many day or years the event will occur. and once the timer is over it will display an image of the event is done.</p>
+
+<h2 id="Contact-Us">Contact-Us</h2>
+<p>You can contact us through mail and Phone number. We will help you with ouyr fulliest to calculate your special event time </p>
+
+<h2 id="Help-Us">Help-Us</h2>
+<p>Buy Our count down timer services as soon as possible and Help us to grow more. The more we grow the more we will bring new features and technologies to you at your hand finger so did not to do anything or calculate anything.</p>
+
+<footer>
+  <p id="id2">Creater: Krishna & Piyush</p>
+  <p id="id2">PRN: 250245920060 & 250245920061</p>
+  <p id="id3">© 2025 IET PUNE. All rights reserved.</p>
+</footer>
+
+<script>
+// Here we set the date we countdown to till.
+
+var countDownDate = new Date("Mar 28, 2030, 18:05:25").getTime();
+
+// Variable for tracking timer state and interval
+var isRunning = false;
+var interval;
+var remainingTime = countDownDate - new Date().getTime(); // Initialize remaining time
+
+// Countdown function
+function toggleTimer() {
+  if (!isRunning) {
+    isRunning = true;
+    document.getElementById("demo").style.color = "green";
+
+    interval = setInterval(function() {
+      // Reduce the remaining time only if the timer is running
+      remainingTime -= 1000;
+
+      // Time calculations for days, hours, minutes, and seconds
+      var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+      if (remainingTime < 0) {
+        clearInterval(interval);
+        document.getElementById("demo").innerHTML = "Timer over. Thank you!";
+        document.getElementById("demo").style.color = "red";
+
+        // var img = document.createElement("img");
+        // img.src = "bomb.jpg"; 
+        // img.width = 980; 
+        // img.height = 250; 
+
+        // Insert the image above the "Thank you!" message
+        var demoElement = document.getElementById("demo");
+        demoElement.parentNode.insertBefore(img, demoElement);
+      }
+    }, 1000);
+  } else {
+    isRunning = false;
+    document.getElementById("demo").style.color = "red";
+
+    clearInterval(interval);
+  }
+}
+
+document.getElementById("btn1").onclick = toggleTimer;
+
+
+</script>
+
+</body>
+</html>

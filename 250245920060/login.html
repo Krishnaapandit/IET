@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+                *{
+    font-family:'Segoe Ui Light';
+}
+body{
+    background:linear-gradient(to right,#00A4E4, #FEFEFE);
+}
+
+#login-box{
+width:500px;
+height:500px;
+background:white;
+margin:120px auto;
+text-align:Center;
+border-radius:25px;
+border-color:black ;
+box-shadow:17px 17px 20px grey ;
+}
+
+h1{
+padding-top:40px;
+}
+input{
+text-align: center;
+width:70%;
+margin-bottom:30px;
+padding-top:12px;
+padding-bottom:10px; 
+.border-width:0;
+outline-width:0;
+border-bottom-width:2px;
+border-bottom-color:black;
+border-bottom-style:solid;
+border-radius:15px;
+
+}
+button{
+width:40%;
+border:0;
+padding-top:10px;
+padding-bottom:10px;
+background:black;
+color:white;
+font-size:15px;
+border-radius: 10px;
+
+}
+button:hover{
+color:black;
+background:white;
+border-width:1px;
+border-style:solid;
+border-color:black;
+
+
+}
+
+
+        </style>
+    
+    </head>
+    <body>
+<div id="login-box">
+    <h1>LOGIN!</h1>
+    <form action ="WBT project.html" onsubmit="return validate()">
+        <input type="text" placeholder="Enter Username" id="name" onkeyup="validateName()"><br>
+        <span id="error" class="error-text"></span><br><br>
+        <input type="password" placeholder="PASSWORD" id="pass"onkeyup="validatePassword()"><br>
+        <span id="error1" class="error-text"></span><br><br>
+        <button type="submit">Login</button>
+        <p><strong>Don't have a Account create here</strong> <a href="signup.html">Sign-up</a></p>
+     
+        
+    </form>
+    
+</div>
+
+<script>
+    function validate(){
+        var flag=true;
+        const name =document.getElementById("name").value;
+        if(name.length==0){
+            document.getElementById("error").innerHTML="Name is required";
+            flag=false;
+        }
+        const pass =document.getElementById("pass").value;
+        if(pass.length==0){
+            document.getElementById("error1").innerHTML="Password is required";
+            flag=false;
+        }
+        return flag;
+        }
+      
+        function validateName()
+  {
+    const name= document.getElementById("name").value;
+        if(name.length == 0)
+                document.getElementById("error").innerHTML="Name is required";
+        else
+            document.getElementById("error").innerHTML="";
+        }
+
+        function validatePassword(){
+            const pass= document.getElementById("pass").value;
+        if(pass.length == 0)
+                document.getElementById("error1").innerHTML="Password is required";
+        else
+            document.getElementById("error1").innerHTML="";
+
+        }
+        
+  
+</script>
+    </body>
+</html>

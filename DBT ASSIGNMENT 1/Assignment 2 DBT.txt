@@ -1,0 +1,102 @@
+1. Display the Employee Name, Job, and Start Date of Employees hired from February 1981 to May 1981.
+
+mysql> select `employee name`, positions, hiredate from emp where hiredate between '1981-02-01' and '1981-05-31';
++---------------+-----------+------------+
+| employee name | positions | hiredate   |
++---------------+-----------+------------+
+| ALLEN         | SALESMAN  | 1981-02-20 |
+| WARD          | SALESMAN  | 1981-02-22 |
+| JONES         | MANAGER   | 1981-04-02 |
+| BLAKE         | MANAGER   | 1981-05-01 |
++---------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+2. Display the Name and Hiredate of every Employee who was hired in 1982
+
+
+mysql> select `employee name`, hiredate from emp where year(hiredate)=1982;
++---------------+------------+
+| employee name | hiredate   |
++---------------+------------+
+| SCOTT         | 1982-12-09 |
+| HOFFMAN       | 1982-03-24 |
+| MILLER        | 1982-01-23 |
+| ALEX          | 1982-01-24 |
++---------------+------------+
+4 rows in set (0.00 sec)
+
+3. Write a query to display the current date. Label the column as Current Date.
+
+mysql> select current_date as 'current date';
++--------------+
+| current date |
++--------------+
+| 2025-03-31   |
++--------------+
+1 row in set (0.00 sec)
+
+
+4. Display the Employee’s Name, Hiredate, Salary and Review Date, which is first Monday after six months of service.
+
+
+
+
+
+
+
+List employee details who have joined in December.
+
+mysql> select * from emp where month(hiredate)=12;
++-------+---------------+--------+-----------+------+------------+------+------------+--------+---------+--------------+------------+------------+----------+------------+
+| EMPNO | employee name | GENDER | positions | MGR  | HIREDATE   | SAL  | commission | DEPTNO | BONUSID | USER NAME    | PWD        | PHONE      | isActive | new_salary |
++-------+---------------+--------+-----------+------+------------+------+------------+--------+---------+--------------+------------+------------+----------+------------+
+|  7369 | SMITH         | M      | CLERK     | 7902 | 1980-12-17 |  800 |       NULL |     20 |       2 | TRITONE      | a12recmpm  | 7032300023 |        0 |       1800 |
+|  7415 | AARAV         | M      | CLERK     | 7902 | 1981-12-31 | 3350 |       NULL |     10 |    NULL | AARAV        | NULL       | 7032300084 |        0 |       1800 |
+|  7788 | SCOTT         | M      | ANALYST   | 7566 | 1982-12-09 | 3000 |       NULL |     20 |       3 | WHITE SAND   | a12recmpm  | NULL       |        1 |       3000 |
+|  7900 | JAMES         | M      | CLERK     | 7698 | 1981-12-03 |  950 |       NULL |     30 |       2 | CRAZY LEADER | sales@2017 | 7132300042 |        1 |       1800 |
+|  7902 | FORD          | M      | ANALYST   | 7566 | 1981-12-03 | 3000 |       NULL |     20 |       4 | CONBRIO      | a12recmpm  | NULL       |        0 |       3000 |
++-------+---------------+--------+-----------+------+------------+------+------------+--------+---------+--------------+------------+------------+----------+------------+
+5 rows in set (0.00 sec)
+
+
+Display day on which KING joined.
+
+mysql> select empname, hiredate, dayname(hiredate) 'dayjoined' from emp where empname='king';
++---------+------------+-----------+
+| empname | hiredate   | dayjoined |
++---------+------------+-----------+
+| KING    | 1981-11-17 | Tuesday   |
++---------+------------+-----------+
+1 row in set (0.00 sec)
+
+
+
+Display month on which MARTIN joined.
+
+mysql> select empname, hiredate, month(hiredate) monthjoinedd from emp where empname='martin';
++---------+------------+--------------+
+| empname | hiredate   | monthjoinedd |
++---------+------------+--------------+
+| MARTIN  | 1981-09-28 |            9 |
++---------+------------+--------------+
+1 row in set (0.00 sec)
+
+
+List all employee hired in the month of December.
+
+mysql> select empname, hiredate, month(hiredate) from emp where month(hiredate)=12;
++---------+------------+-----------------+
+| empname | hiredate   | month(hiredate) |
++---------+------------+-----------------+
+| SMITH   | 1980-12-17 |              12 |
+| AARAV   | 1981-12-31 |              12 |
+| SCOTT   | 1982-12-09 |              12 |
+| JAMES   | 1981-12-03 |              12 |
+| FORD    | 1981-12-03 |              12 |
++---------+------------+-----------------+
+5 rows in set (0.00 sec)
+
+
+
+
+

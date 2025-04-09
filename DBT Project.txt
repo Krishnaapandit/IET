@@ -1,0 +1,760 @@
+mysql> create table paitents (PatientID int primary key, FirstName varchar(30),LastName varchar(30),DateofBirth date, Gender varchar(20), ContactNumber varchar(15), Email varchar(30),Address varchar(35),EmergencyContact varchar(15), InsuranceInfo varchar(20), BloodType varchar(10), MedicalHistory varchar(30), DateofRegistration date);
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> show columns from paitents;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| PatientID          | int         | NO   | PRI | NULL    |       |
+| FirstName          | varchar(30) | YES  |     | NULL    |       |
+| LastName           | varchar(30) | YES  |     | NULL    |       |
+| DateofBirth        | date        | YES  |     | NULL    |       |
+| Gender             | varchar(20) | YES  |     | NULL    |       |
+| ContactNumber      | varchar(15) | YES  |     | NULL    |       |
+| Email              | varchar(30) | YES  |     | NULL    |       |
+| Address            | varchar(35) | YES  |     | NULL    |       |
+| EmergencyContact   | varchar(15) | YES  |     | NULL    |       |
+| InsuranceInfo      | varchar(20) | YES  |     | NULL    |       |
+| BloodType          | varchar(10) | YES  |     | NULL    |       |
+| MedicalHistory     | varchar(30) | YES  |     | NULL    |       |
+| DateofRegistration | date        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+
+mysql> create table Doctors (DoctorID int primary key, FirstName varchar(30),LastName varchar(30),Specialization varchar(20), Email varchar(30),Gender varchar(10),YearsofExperience varchar(15),Qualifications varchar(20));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> show columns from doctors;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| DoctorID          | int         | NO   | PRI | NULL    |       |
+| FirstName         | varchar(30) | YES  |     | NULL    |       |
+| LastName          | varchar(30) | YES  |     | NULL    |       |
+| Specialization    | varchar(20) | YES  |     | NULL    |       |
+| Email             | varchar(30) | YES  |     | NULL    |       |
+| Gender            | varchar(10) | YES  |     | NULL    |       |
+| YearsofExperience | varchar(15) | YES  |     | NULL    |       |
+| Qualifications    | varchar(20) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> create table Appointments (AppointmentID int primary key,PatientID int,foreign key (PatientID) references paitents (patientID), DoctorID int,foreign key (DoctorID) references doctors (DoctorID),AppointmentDate date,ReasonforVisit varchar(15),Status enum('Scheduled','completed','cancelled'),Notes varchar(15));
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> show columns from Appointments;
++-----------------+-------------------------------------------+------+-----+---------+-------+
+| Field           | Type                                      | Null | Key | Default | Extra |
++-----------------+-------------------------------------------+------+-----+---------+-------+
+| AppointmentID   | int                                       | NO   | PRI | NULL    |       |
+| PatientID       | int                                       | YES  | MUL | NULL    |       |
+| DoctorID        | int                                       | YES  | MUL | NULL    |       |
+| AppointmentDate | date                                      | YES  |     | NULL    |       |
+| ReasonforVisit  | varchar(15)                               | YES  |     | NULL    |       |
+| Status          | enum('Scheduled','completed','cancelled') | YES  |     | NULL    |       |
+| Notes           | varchar(15)                               | YES  |     | NULL    |       |
++-----------------+-------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> create table MedicalRecords (RecordID int primary key,PatientID int, foreign key(PatientID) references Paitents(PatientID),DoctorID int, foreign key(DoctorID) references doctors(DoctorID),Diagnosis varchar(20),TreatmentPlan varchar(20),DateOfVisit date,TestResults varchar(10),FollowUpDate date);
+Query OK, 0 rows affected (0.67 sec)
+
+mysql> show columns from medicalrecords;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| RecordID      | int         | NO   | PRI | NULL    |       |
+| PatientID     | int         | YES  | MUL | NULL    |       |
+| DoctorID      | int         | YES  | MUL | NULL    |       |
+| Diagnosis     | varchar(20) | YES  |     | NULL    |       |
+| TreatmentPlan | varchar(20) | YES  |     | NULL    |       |
+| DateOfVisit   | date        | YES  |     | NULL    |       |
+| TestResults   | varchar(10) | YES  |     | NULL    |       |
+| FollowUpDate  | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+mysql> create table Prescriptions (PrescriptionID int primary key,RecordID int, foreign key(RecordID) references Medicalrecords(RecordID),MedicationName varchar(20),Dosage varchar(20),Frequency varchar(10),Duration varchar(20),Notes varchar(20));
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> show columns from prescriptions;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| PrescriptionID | int         | NO   | PRI | NULL    |       |
+| RecordID       | int         | YES  | MUL | NULL    |       |
+| MedicationName | varchar(20) | YES  |     | NULL    |       |
+| Dosage         | varchar(20) | YES  |     | NULL    |       |
+| Frequency      | varchar(10) | YES  |     | NULL    |       |
+| Duration       | varchar(20) | YES  |     | NULL    |       |
+| Notes          | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> create table Billing (BillID int primary key,PatientID int, foreign key(PatientID) references Paitents(PatientID),Amount int,BillingDate date,Status enum('Paid','Unpaid','Pending'),PaymentMethod enum('cash','CreditCard','Insurance'),Notes varchar(20));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc billing
+    -> ;
++---------------+---------------------------------------+------+-----+---------+-------+
+| Field         | Type                                  | Null | Key | Default | Extra |
++---------------+---------------------------------------+------+-----+---------+-------+
+| BillID        | int                                   | NO   | PRI | NULL    |       |
+| PatientID     | int                                   | YES  | MUL | NULL    |       |
+| Amount        | int                                   | YES  |     | NULL    |       |
+| BillingDate   | date                                  | YES  |     | NULL    |       |
+| Status        | enum('Paid','Unpaid','Pending')       | YES  |     | NULL    |       |
+| PaymentMethod | enum('cash','CreditCard','Insurance') | YES  |     | NULL    |       |
+| Notes         | varchar(20)                           | YES  |     | NULL    |       |
++---------------+---------------------------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> create table Users (userID int primary key,Username varchar(20),Password varchar(20),Role enum('Admin','Doctor','Nurse','Receptionist','Patient'),Firstname varchar(20),LastName varchar(20),ContactNumber varchar(20),Email varchar(20));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc users
+    -> ;
++---------------+---------------------------------------------------------+------+-----+---------+-------+
+| Field         | Type                                                    | Null | Key | Default | Extra |
++---------------+---------------------------------------------------------+------+-----+---------+-------+
+| userID        | int                                                     | NO   | PRI | NULL    |       |
+| Username      | varchar(20)                                             | YES  |     | NULL    |       |
+| Password      | varchar(20)                                             | YES  |     | NULL    |       |
+| Role          | enum('Admin','Doctor','Nurse','Receptionist','Patient') | YES  |     | NULL    |       |
+| Firstname     | varchar(20)                                             | YES  |     | NULL    |       |
+| LastName      | varchar(20)                                             | YES  |     | NULL    |       |
+| ContactNumber | varchar(20)                                             | YES  |     | NULL    |       |
+| Email         | varchar(20)                                             | YES  |     | NULL    |       |
++---------------+---------------------------------------------------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+mysql> create table staff (StaffID int primary key,Firstname varchar(20),LastName varchar(20),Role varchar(20),ContactNumber varchar(20),Email varchar(20),shift varchar(15),DateHired date);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc staff
+    -> ;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| StaffID       | int         | NO   | PRI | NULL    |       |
+| Firstname     | varchar(20) | YES  |     | NULL    |       |
+| LastName      | varchar(20) | YES  |     | NULL    |       |
+| Role          | varchar(20) | YES  |     | NULL    |       |
+| ContactNumber | varchar(20) | YES  |     | NULL    |       |
+| Email         | varchar(20) | YES  |     | NULL    |       |
+| shift         | varchar(15) | YES  |     | NULL    |       |
+| DateHired     | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+
+mysql> desc emergencytables;
+ERROR 1146 (42S02): Table 'dac60.emergencytables' doesn't exist
+mysql> desc emergencycontacts;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| ContactID     | int         | NO   | PRI | NULL    |       |
+| PatientID     | int         | YES  | MUL | NULL    |       |
+| ContactName   | varchar(20) | YES  |     | NULL    |       |
+| Relationship  | varchar(20) | YES  |     | NULL    |       |
+| ContactNumber | varchar(15) | YES  |     | NULL    |       |
+| Email         | varchar(20) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+mysql> create table Inventory (ItemID int primary key,ItemName varchar(20),Quantity varchar(20),Price varchar(15),Supplier varchar(20),Category varchar(20),RecordLevel varchar(20), ExpirationDate date);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc inventory;
+
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| ItemID         | int         | NO   | PRI | NULL    |       |
+| ItemName       | varchar(20) | YES  |     | NULL    |       |
+| Quantity       | varchar(20) | YES  |     | NULL    |       |
+| Price          | varchar(15) | YES  |     | NULL    |       |
+| Supplier       | varchar(20) | YES  |     | NULL    |       |
+| Category       | varchar(20) | YES  |     | NULL    |       |
+| reorder        | varchar(20) | YES  |     | NULL    |       |
+| ExpirationDate | date        | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> create table Labtests (TestID int primary key,PatientID int,foreign key(PatientID) references Paitents(PatientID),TestName varchar(20),TestDate varchar(15),Results varchar(20),DoctorID int, foreign key(DoctorID) references doctors(DoctorID), Notes varchar(20));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc labtests;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TestID    | int         | NO   | PRI | NULL    |       |
+| PatientID | int         | YES  | MUL | NULL    |       |
+| TestName  | varchar(20) | YES  |     | NULL    |       |
+| TestDate  | varchar(15) | YES  |     | NULL    |       |
+| Results   | varchar(20) | YES  |     | NULL    |       |
+| DoctorID  | int         | YES  | MUL | NULL    |       |
+| Notes     | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+mysql> create table PatientFeedback (FeedbackID int primary key,PatientID int,foreign key(PatientID) references Paitents(PatientID),DoctorID int, foreign key(DoctorID) references doctors(DoctorID),FeedbackDate date, Rating varchar(20),Comments varchar(20));
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc patientfeedback;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| FeedbackID   | int         | NO   | PRI | NULL    |       |
+| PatientID    | int         | YES  | MUL | NULL    |       |
+| DoctorID     | int         | YES  | MUL | NULL    |       |
+| FeedbackDate | date        | YES  |     | NULL    |       |
+| Rating       | varchar(20) | YES  |     | NULL    |       |
+| Comments     | varchar(20) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> show columns from paitents;
+ERROR 1046 (3D000): No database selected
+mysql> use dac60
+Database changed
+mysql> show columns from paitents;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| PatientID          | int         | NO   | PRI | NULL    |       |
+| FirstName          | varchar(30) | YES  |     | NULL    |       |
+| LastName           | varchar(30) | YES  |     | NULL    |       |
+| DateofBirth        | date        | YES  |     | NULL    |       |
+| Gender             | varchar(20) | YES  |     | NULL    |       |
+| ContactNumber      | varchar(15) | YES  |     | NULL    |       |
+| Email              | varchar(30) | YES  |     | NULL    |       |
+| Address            | varchar(35) | YES  |     | NULL    |       |
+| EmergencyContact   | varchar(15) | YES  |     | NULL    |       |
+| InsuranceInfo      | varchar(20) | YES  |     | NULL    |       |
+| BloodType          | varchar(10) | YES  |     | NULL    |       |
+| MedicalHistory     | varchar(30) | YES  |     | NULL    |       |
+| DateofRegistration | date        | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+13 rows in set (0.03 sec)
+
+mysql> insert into paitents values(1,'Jethalal','Gada','1989-02-10','Male','8356451236','Jethalalgada@gmail.com','Gokuldam Society','9878456215','LIC insurance','A+','None','2025-04-09';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into paitents values(1,'Jethalal','Gada','1989-02-10','Male','8356451236','Jethalalgada@gmail.com','Gokuldam Society','9878456215','LIC insurance','A+','None','2025-04-09');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from paitents;
++-----------+-----------+----------+-------------+--------+---------------+------------------------+------------------+------------------+---------------+-----------+----------------+--------------------+
+| PatientID | FirstName | LastName | DateofBirth | Gender | ContactNumber | Email                  | Address          | EmergencyContact | InsuranceInfo | BloodType | MedicalHistory | DateofRegistration |
++-----------+-----------+----------+-------------+--------+---------------+------------------------+------------------+------------------+---------------+-----------+----------------+--------------------+
+|         1 | Jethalal  | Gada     | 1989-02-10  | Male   | 8356451236    | Jethalalgada@gmail.com | Gokuldam Society | 9878456215       | LIC insurance | A+        | None           | 2025-04-09         |
++-----------+-----------+----------+-------------+--------+---------------+------------------------+------------------+------------------+---------------+-----------+----------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into paitents values(2,'Goku','Saiyan','1800-03-06','Male','8965231478','gokusaiyaan@gmail.com','Hercule City','9878456541','Policy Bazaar','O-','None','2024-03-09');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into paitents values(3,'Vegeta','Prince','1802-10-15','Male','9865231478','vegetaprince@gmail.com','Sambhajinagar City','87784565420','Policy Bazaar','O+','High BP','2024-10-25');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into paitents values(3,'Naruto','Uzumaki','1947-08-15','Male','9865598478','uzumakinaruto@gmail.com','Pune City','9822356981','Star Health','AB+','None','2023-10-25');
+ERROR 1062 (23000): Duplicate entry '3' for key 'paitents.PRIMARY'
+mysql> insert into paitents values(4,'Naruto','Uzumaki','1947-08-15','Male','9865598478','uzumakinaruto@gmail.com','Pune City','9822356981','Star Health','AB+','None','2023-10-25');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into paitents values(5,'Itachi','Uchiha','1974-06-07','Male','9865898443','itachiuchiha@gmail.com','Mumbai City','9822356969','Phonepe Life insurance','B+','Corona Positive','2024-10-26');
+ERROR 1406 (22001): Data too long for column 'InsuranceInfo' at row 1
+mysql> insert into paitents values(5,'Itachi','Uchiha','1974-06-07','Male','9865898443','itachiuchiha@gmail.com','Mumbai City','9822356969','Life insurance','B+','Corona Positive','2024-10-26');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from paitents;
++-----------+-----------+----------+-------------+--------+---------------+-------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+| PatientID | FirstName | LastName | DateofBirth | Gender | ContactNumber | Email                   | Address            | EmergencyContact | InsuranceInfo  | BloodType | MedicalHistory  | DateofRegistration |
++-----------+-----------+----------+-------------+--------+---------------+-------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+|         1 | Jethalal  | Gada     | 1989-02-10  | Male   | 8356451236    | Jethalalgada@gmail.com  | Gokuldam Society   | 9878456215       | LIC insurance  | A+        | None            | 2025-04-09         |
+|         2 | Goku      | Saiyan   | 1800-03-06  | Male   | 8965231478    | gokusaiyaan@gmail.com   | Hercule City       | 9878456541       | Policy Bazaar  | O-        | None            | 2024-03-09         |
+|         3 | Vegeta    | Prince   | 1802-10-15  | Male   | 9865231478    | vegetaprince@gmail.com  | Sambhajinagar City | 87784565420      | Policy Bazaar  | O+        | High BP         | 2024-10-25         |
+|         4 | Naruto    | Uzumaki  | 1947-08-15  | Male   | 9865598478    | uzumakinaruto@gmail.com | Pune City          | 9822356981       | Star Health    | AB+       | None            | 2023-10-25         |
+|         5 | Itachi    | Uchiha   | 1974-06-07  | Male   | 9865898443    | itachiuchiha@gmail.com  | Mumbai City        | 9822356969       | Life insurance | B+        | Corona Positive | 2024-10-26         |
++-----------+-----------+----------+-------------+--------+---------------+-------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into paitents values(6,'Bruce','Wayne','1981-06-17','Male','98658986320','brucewayne@gmail.com','Gotham City','9822356985','LIC insurance','A+','None','2021-01-24');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into paitents values(7,'Peter','Paker','2000-08-14','Male','98658956239','peterparker@gmail.com','New York City','982238956','Policy Bazaar','A+','None','2025-01-24');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into paitents values(8,'Natasha','Romanoff','2000-04-25','Female','9865878523','romanoffnatasha@gmail.com','New York City','7222389586','Star Health','B+','None','2024-28-02');
+ERROR 1292 (22007): Incorrect date value: '2024-28-02' for column 'DateofRegistration' at row 1
+mysql> insert into paitents values(8,'Natasha','Romanoff','2000-04-25','Female','9865878523','romanoffnatasha@gmail.com','New York City','7222389586','Star Health','B+','None','2024-05-28');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into paitents values(9,'Gal','Gadot','2005-12-24','Female','9885247860','galgadot@gmail.com','Hollywood City','8122389586','Policy Bazaar','O+','Blood Sugar','2020-01-22');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into paitents values(10,'Dua','Lipa','2003-12-12','Female','8185247860','dualipa@gmail.com','Sambhajinagar City','8122374169','Policy Bazaar','A-','Blood Cancer','2022-09-22');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from paitents;
++-----------+-----------+----------+-------------+--------+---------------+---------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+| PatientID | FirstName | LastName | DateofBirth | Gender | ContactNumber | Email                     | Address            | EmergencyContact | InsuranceInfo  | BloodType | MedicalHistory  | DateofRegistration |
++-----------+-----------+----------+-------------+--------+---------------+---------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+|         1 | Jethalal  | Gada     | 1989-02-10  | Male   | 8356451236    | Jethalalgada@gmail.com    | Gokuldam Society   | 9878456215       | LIC insurance  | A+        | None            | 2025-04-09         |
+|         2 | Goku      | Saiyan   | 1800-03-06  | Male   | 8965231478    | gokusaiyaan@gmail.com     | Hercule City       | 9878456541       | Policy Bazaar  | O-        | None            | 2024-03-09         |
+|         3 | Vegeta    | Prince   | 1802-10-15  | Male   | 9865231478    | vegetaprince@gmail.com    | Sambhajinagar City | 87784565420      | Policy Bazaar  | O+        | High BP         | 2024-10-25         |
+|         4 | Naruto    | Uzumaki  | 1947-08-15  | Male   | 9865598478    | uzumakinaruto@gmail.com   | Pune City          | 9822356981       | Star Health    | AB+       | None            | 2023-10-25         |
+|         5 | Itachi    | Uchiha   | 1974-06-07  | Male   | 9865898443    | itachiuchiha@gmail.com    | Mumbai City        | 9822356969       | Life insurance | B+        | Corona Positive | 2024-10-26         |
+|         6 | Bruce     | Wayne    | 1981-06-17  | Male   | 98658986320   | brucewayne@gmail.com      | Gotham City        | 9822356985       | LIC insurance  | A+        | None            | 2021-01-24         |
+|         7 | Peter     | Paker    | 2000-08-14  | Male   | 98658956239   | peterparker@gmail.com     | New York City      | 982238956        | Policy Bazaar  | A+        | None            | 2025-01-24         |
+|         8 | Natasha   | Romanoff | 2000-04-25  | Female | 9865878523    | romanoffnatasha@gmail.com | New York City      | 7222389586       | Star Health    | B+        | None            | 2024-05-28         |
+|         9 | Gal       | Gadot    | 2005-12-24  | Female | 9885247860    | galgadot@gmail.com        | Hollywood City     | 8122389586       | Policy Bazaar  | O+        | Blood Sugar     | 2020-01-22         |
+|        10 | Dua       | Lipa     | 2003-12-12  | Female | 8185247860    | dualipa@gmail.com         | Sambhajinagar City | 8122374169       | Policy Bazaar  | A-        | Blood Cancer    | 2022-09-22         |
++-----------+-----------+----------+-------------+--------+---------------+---------------------------+--------------------+------------------+----------------+-----------+-----------------+--------------------+
+10 rows in set (0.00 sec)
+
+
+mysql> insert into doctors values(1,'Tony','Stark','Cardiologist','Tonystark@gmail.com','Male','20','MBBS');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> show columns from doctors;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| DoctorID          | int         | NO   | PRI | NULL    |       |
+| FirstName         | varchar(30) | YES  |     | NULL    |       |
+| LastName          | varchar(30) | YES  |     | NULL    |       |
+| Specialization    | varchar(20) | YES  |     | NULL    |       |
+| Email             | varchar(30) | YES  |     | NULL    |       |
+| Gender            | varchar(10) | YES  |     | NULL    |       |
+| YearsofExperience | varchar(15) | YES  |     | NULL    |       |
+| Qualifications    | varchar(20) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> show * from doctors;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from doctors' at line 1
+mysql> select * from doctors;
++----------+-----------+----------+----------------+---------------------+--------+-------------------+----------------+
+| DoctorID | FirstName | LastName | Specialization | Email               | Gender | YearsofExperience | Qualifications |
++----------+-----------+----------+----------------+---------------------+--------+-------------------+----------------+
+|        1 | Tony      | Stark    | Cardiologist   | Tonystark@gmail.com | Male   | 20                | MBBS           |
++----------+-----------+----------+----------------+---------------------+--------+-------------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> insert into doctors values(1,'Munna','Bhai','Orthopedies','MunnaBhaiMBBS@gmail.com','Male','25','MBBS');
+ERROR 1062 (23000): Duplicate entry '1' for key 'doctors.PRIMARY'
+mysql> insert into doctors values(2,'Munna','Bhai','Orthopedies','MunnaBhaiMBBS@gmail.com','Male','25','MBBS');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into doctors values(3,'Bruce','Banar','Neurologist','brucebanar@gmail.com','Male','18','BHMS');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into doctors values(3,'Vaibhavi','Kabra','Gynecologist','kabraVaibhavi@gmail.com','Female','22','Ayurvedicspecialist');
+ERROR 1062 (23000): Duplicate entry '3' for key 'doctors.PRIMARY'
+mysql> insert into doctors values(4,'Vaibhavi','Kabra','Gynecologist','kabraVaibhavi@gmail.com','Female','22','Ayurvedicspecialist');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into doctors values(5,'Priya','Chimnani','Pulmonologist','priyaChimnani@gmail.com','Female','20','MBBS');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into doctors values(6,'Rajesh','Purwar','Veterinarian','priyaChimnani@gmail.com','Female','20','MBBS');
+Query OK, 1 row affected (0.03 sec)
+
+mysql>
+mysql> select * from doctors;
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+| DoctorID | FirstName | LastName | Specialization | Email                   | Gender | YearsofExperience | Qualifications      |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+|        1 | Tony      | Stark    | Cardiologist   | Tonystark@gmail.com     | Male   | 20                | MBBS                |
+|        2 | Munna     | Bhai     | Orthopedies    | MunnaBhaiMBBS@gmail.com | Male   | 25                | MBBS                |
+|        3 | Bruce     | Banar    | Neurologist    | brucebanar@gmail.com    | Male   | 18                | BHMS                |
+|        4 | Vaibhavi  | Kabra    | Gynecologist   | kabraVaibhavi@gmail.com | Female | 22                | Ayurvedicspecialist |
+|        5 | Priya     | Chimnani | Pulmonologist  | priyaChimnani@gmail.com | Female | 20                | MBBS                |
+|        6 | Rajesh    | Purwar   | Veterinarian   | priyaChimnani@gmail.com | Female | 20                | MBBS                |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> update doctors set email='RajeshPurwar@gmail.com where doctorid=6;
+    '> update doctors set email='RajeshPurwar@gmail.com' where doctorid=6;
+    '> update doctors set email='RajeshPurwar@gmail.com' where doctorid=6;
+    '> update doctors set email='RajeshPurwar@gmail.com' where doctorid=6;
+    '> ^C
+mysql> update table doctors set email='RajeshPurwar@gmail.com' where doctorid=6;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table doctors set email='RajeshPurwar@gmail.com' where doctorid=6' at line 1
+mysql> update doctors set email='RajeshPurwar@gmail.com' where doctorid='6';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from doctors;
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+| DoctorID | FirstName | LastName | Specialization | Email                   | Gender | YearsofExperience | Qualifications      |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+|        1 | Tony      | Stark    | Cardiologist   | Tonystark@gmail.com     | Male   | 20                | MBBS                |
+|        2 | Munna     | Bhai     | Orthopedies    | MunnaBhaiMBBS@gmail.com | Male   | 25                | MBBS                |
+|        3 | Bruce     | Banar    | Neurologist    | brucebanar@gmail.com    | Male   | 18                | BHMS                |
+|        4 | Vaibhavi  | Kabra    | Gynecologist   | kabraVaibhavi@gmail.com | Female | 22                | Ayurvedicspecialist |
+|        5 | Priya     | Chimnani | Pulmonologist  | priyaChimnani@gmail.com | Female | 20                | MBBS                |
+|        6 | Rajesh    | Purwar   | Veterinarian   | RajeshPurwar@gmail.com  | Female | 20                | MBBS                |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> update doctors set gender='Male' where doctorid=6;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from doctors;
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+| DoctorID | FirstName | LastName | Specialization | Email                   | Gender | YearsofExperience | Qualifications      |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+|        1 | Tony      | Stark    | Cardiologist   | Tonystark@gmail.com     | Male   | 20                | MBBS                |
+|        2 | Munna     | Bhai     | Orthopedies    | MunnaBhaiMBBS@gmail.com | Male   | 25                | MBBS                |
+|        3 | Bruce     | Banar    | Neurologist    | brucebanar@gmail.com    | Male   | 18                | BHMS                |
+|        4 | Vaibhavi  | Kabra    | Gynecologist   | kabraVaibhavi@gmail.com | Female | 22                | Ayurvedicspecialist |
+|        5 | Priya     | Chimnani | Pulmonologist  | priyaChimnani@gmail.com | Female | 20                | MBBS                |
+|        6 | Rajesh    | Purwar   | Veterinarian   | RajeshPurwar@gmail.com  | Male   | 20                | MBBS                |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into doctors values(7,'Raman','Bhere','Psychiatrists','Ramanbhere@gmail.com','Male','12','MD');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into doctors values(8,'Pooja','Goge','Cardiothoracic Surgeon','PoojaGoge@gmail.com','Female','5','BHMS');
+ERROR 1406 (22001): Data too long for column 'Specialization' at row 1
+mysql> insert into doctors values(8,'Pooja','Goge','Cardiothoracic','PoojaGoge@gmail.com','Female','5','BHMS');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into doctors values(9,'Nitin','Gokle','Radiologist','NitinGokle@gmail.com','Male','10','Ayurvedic');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into doctors values(10,'Sayyed','Amir','Dentist','sayyadAmir@gmail.com','Male','08','MBBS');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from doctors;
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+| DoctorID | FirstName | LastName | Specialization | Email                   | Gender | YearsofExperience | Qualifications      |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+|        1 | Tony      | Stark    | Cardiologist   | Tonystark@gmail.com     | Male   | 20                | MBBS                |
+|        2 | Munna     | Bhai     | Orthopedies    | MunnaBhaiMBBS@gmail.com | Male   | 25                | MBBS                |
+|        3 | Bruce     | Banar    | Neurologist    | brucebanar@gmail.com    | Male   | 18                | BHMS                |
+|        4 | Vaibhavi  | Kabra    | Gynecologist   | kabraVaibhavi@gmail.com | Female | 22                | Ayurvedicspecialist |
+|        5 | Priya     | Chimnani | Pulmonologist  | priyaChimnani@gmail.com | Female | 20                | MBBS                |
+|        6 | Rajesh    | Purwar   | Veterinarian   | RajeshPurwar@gmail.com  | Male   | 20                | MBBS                |
+|        7 | Raman     | Bhere    | Psychiatrists  | Ramanbhere@gmail.com    | Male   | 12                | MD                  |
+|        8 | Pooja     | Goge     | Cardiothoracic | PoojaGoge@gmail.com     | Female | 5                 | BHMS                |
+|        9 | Nitin     | Gokle    | Radiologist    | NitinGokle@gmail.com    | Male   | 10                | Ayurvedic           |
+|       10 | Sayyed    | Amir     | Dentist        | sayyadAmir@gmail.com    | Male   | 08                | MBBS                |
++----------+-----------+----------+----------------+-------------------------+--------+-------------------+---------------------+
+10 rows in set (0.00 sec)
+
+
+mysql> insert into appointments values(1,1,1,'2025-04-15','Routine-Checkup','Scheduled','Exercise');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes    |
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise |
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into appointments values(2,3,4,'2024-11-15','Fever','Completed','BedRest');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes    |
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest  |
++---------------+-----------+----------+-----------------+-----------------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into appointments values(3,4,2,'2023-12-20','General Checkup','completed','Follow Diet');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+-------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes       |
++---------------+-----------+----------+-----------------+-----------------+-----------+-------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise    |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest     |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet |
++---------------+-----------+----------+-----------------+-----------------+-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into appointments values(3,5,6,'2024-11-12','Corona Treatment','Completed','Wearing Mask');
+ERROR 1406 (22001): Data too long for column 'ReasonforVisit' at row 1
+mysql> insert into appointments values(3,5,6,'2024-11-12','Corona medication','Completed','Wearing Mask');
+ERROR 1406 (22001): Data too long for column 'ReasonforVisit' at row 1
+mysql> insert into appointments values(3,5,6,'2024-11-12','Corona issue','Completed','Wearing Mask');
+ERROR 1062 (23000): Duplicate entry '3' for key 'appointments.PRIMARY'
+mysql> insert into appointments values(4,5,6,'2024-11-12','Corona issue','Completed','Wearing Mask');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes        |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise     |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest      |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet  |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into appointments values(5,2,10,'2024-05-15','Sickness','Cancelled','None');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes        |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise     |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest      |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet  |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None         |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into appointments values(6,10,3,'2022-10-22','Cancer issue','Completed','follow Diet');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes        |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise     |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest      |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet  |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None         |
+|             6 |        10 |        3 | 2022-10-22      | Cancer issue    | completed | follow Diet  |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into appointments values(7,6,5,'2021-02-15','Mental Stress','Cancelled','None');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes        |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise     |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest      |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet  |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None         |
+|             6 |        10 |        3 | 2022-10-22      | Cancer issue    | completed | follow Diet  |
+|             7 |         6 |        5 | 2021-02-15      | Mental Stress   | cancelled | None         |
++---------------+-----------+----------+-----------------+-----------------+-----------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into appointments values(8,9,9,'2025-05-12','Diabetes','Scheduled','no sugar eating');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes           |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise        |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest         |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet     |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask    |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None            |
+|             6 |        10 |        3 | 2022-10-22      | Cancer issue    | completed | follow Diet     |
+|             7 |         6 |        5 | 2021-02-15      | Mental Stress   | cancelled | None            |
+|             8 |         9 |        9 | 2025-05-12      | Diabetes        | Scheduled | no sugar eating |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+8 rows in set (0.03 sec)
+
+mysql> insert into appointments values(9,7,8,'2025-06-30','Full Body Checkup','Scheduled','None');
+ERROR 1406 (22001): Data too long for column 'ReasonforVisit' at row 1
+mysql> insert into appointments values(9,7,8,'2025-06-30','Body Checkup','Scheduled','None');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes           |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise        |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest         |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet     |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask    |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None            |
+|             6 |        10 |        3 | 2022-10-22      | Cancer issue    | completed | follow Diet     |
+|             7 |         6 |        5 | 2021-02-15      | Mental Stress   | cancelled | None            |
+|             8 |         9 |        9 | 2025-05-12      | Diabetes        | Scheduled | no sugar eating |
+|             9 |         7 |        8 | 2025-06-30      | Body Checkup    | Scheduled | None            |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into appointments values(10,8,7,'2024-06-15','Eye Issue','Completed','Wearing speces');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from appointments;
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+| AppointmentID | PatientID | DoctorID | AppointmentDate | ReasonforVisit  | Status    | Notes           |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+|             1 |         1 |        1 | 2025-04-15      | Routine-Checkup | Scheduled | Exercise        |
+|             2 |         3 |        4 | 2024-11-15      | Fever           | completed | BedRest         |
+|             3 |         4 |        2 | 2023-12-20      | General Checkup | completed | Follow Diet     |
+|             4 |         5 |        6 | 2024-11-12      | Corona issue    | completed | Wearing Mask    |
+|             5 |         2 |       10 | 2024-05-15      | Sickness        | cancelled | None            |
+|             6 |        10 |        3 | 2022-10-22      | Cancer issue    | completed | follow Diet     |
+|             7 |         6 |        5 | 2021-02-15      | Mental Stress   | cancelled | None            |
+|             8 |         9 |        9 | 2025-05-12      | Diabetes        | Scheduled | no sugar eating |
+|             9 |         7 |        8 | 2025-06-30      | Body Checkup    | Scheduled | None            |
+|            10 |         8 |        7 | 2024-06-15      | Eye Issue       | completed | Wearing speces  |
++---------------+-----------+----------+-----------------+-----------------+-----------+-----------------+
+10 rows in set (0.00 sec)
+
+
+mysql> select * from  medicalrecords;
+Empty set (0.00 sec)
+
+mysql> desc : MedicalRecords
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ': MedicalRecords' at line 1
+mysql> desc MedicalRecords;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| RecordID      | int         | NO   | PRI | NULL    |       |
+| PatientID     | int         | YES  | MUL | NULL    |       |
+| DoctorID      | int         | YES  | MUL | NULL    |       |
+| Diagnosis     | varchar(20) | YES  |     | NULL    |       |
+| TreatmentPlan | varchar(20) | YES  |     | NULL    |       |
+| DateOfVisit   | date        | YES  |     | NULL    |       |
+| TestResults   | varchar(10) | YES  |     | NULL    |       |
+| FollowUpDate  | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into medicalrecords values(1,1,1,'Light-Fever','Medication',' 2025-04-15','Normal','2025-05-15');
+Query OK, 1 row affected, 1 warning (0.04 sec)
+
+mysql> select * from  medicalrecords;
++----------+-----------+----------+-------------+---------------+-------------+-------------+--------------+
+| RecordID | PatientID | DoctorID | Diagnosis   | TreatmentPlan | DateOfVisit | TestResults | FollowUpDate |
++----------+-----------+----------+-------------+---------------+-------------+-------------+--------------+
+|        1 |         1 |        1 | Light-Fever | Medication    | 2025-04-15  | Normal      | 2025-05-15   |
++----------+-----------+----------+-------------+---------------+-------------+-------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','Symtoms of Corona','2025-03-16');
+ERROR 1406 (22001): Data too long for column 'TestResults' at row 1
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','Corona Symptoms','2025-03-16');
+ERROR 1406 (22001): Data too long for column 'TestResults' at row 1
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','Covid Symptoms','2025-03-16');
+ERROR 1406 (22001): Data too long for column 'TestResults' at row 1
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','Covid Sympt','2025-03-16');
+ERROR 1406 (22001): Data too long for column 'TestResults' at row 1
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','CV-19 Symptoms','2025-03-16');
+ERROR 1406 (22001): Data too long for column 'TestResults' at row 1
+mysql> insert into medicalrecords values(2,3,4,'High-Fever','Strong-Medication',' 2025-11-15','Dengue','2025-03-16');
+Query OK, 1 row affected, 1 warning (0.07 sec)
+
+mysql> update medicalrecords set appointmentdate= '2024-11-15' where recordid='2';
+ERROR 1054 (42S22): Unknown column 'appointmentdate' in 'field list'
+mysql> update medicalrecords set DateOfVisit= '2024-11-15' where recordid='2';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from  medicalrecords;
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+| RecordID | PatientID | DoctorID | Diagnosis   | TreatmentPlan     | DateOfVisit | TestResults | FollowUpDate |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+|        1 |         1 |        1 | Light-Fever | Medication        | 2025-04-15  | Normal      | 2025-05-15   |
+|        2 |         3 |        4 | High-Fever  | Strong-Medication | 2024-11-15  | Dengue      | 2025-03-16   |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into medicalrecords values(3,4,2,'Sickness','Exercise','2023-12-20','Normal','2024-02-20');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from  medicalrecords;
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+| RecordID | PatientID | DoctorID | Diagnosis   | TreatmentPlan     | DateOfVisit | TestResults | FollowUpDate |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+|        1 |         1 |        1 | Light-Fever | Medication        | 2025-04-15  | Normal      | 2025-05-15   |
+|        2 |         3 |        4 | High-Fever  | Strong-Medication | 2024-11-15  | Dengue      | 2025-03-16   |
+|        3 |         4 |        2 | Sickness    | Exercise          | 2023-12-20  | Normal      | 2024-02-20   |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into medicalrecords values(4,5,6,'High-Fever','Strong-Medication','2024-11-12','Corona +ve','2025-01-03');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from  medicalrecords;
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+| RecordID | PatientID | DoctorID | Diagnosis   | TreatmentPlan     | DateOfVisit | TestResults | FollowUpDate |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+|        1 |         1 |        1 | Light-Fever | Medication        | 2025-04-15  | Normal      | 2025-05-15   |
+|        2 |         3 |        4 | High-Fever  | Strong-Medication | 2024-11-15  | Dengue      | 2025-03-16   |
+|        3 |         4 |        2 | Sickness    | Exercise          | 2023-12-20  | Normal      | 2024-02-20   |
+|        4 |         5 |        6 | High-Fever  | Strong-Medication | 2024-11-12  | Corona +ve  | 2025-01-03   |
++----------+-----------+----------+-------------+-------------------+-------------+-------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
